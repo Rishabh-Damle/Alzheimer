@@ -12,8 +12,10 @@ function getEnvVar(key: keyof envConfig): string {
   return value;
 }
 
-export const config: envConfig = {
-  DB_URL: getEnvVar("DB_URL"),
-  JWT_USER_PASSWORD: getEnvVar("JWT_USER_PASSWORD"),
-  PORT: getEnvVar("PORT"),
-};
+export function getConfig(): envConfig {
+  return {
+    DB_URL: getEnvVar("DB_URL"),
+    JWT_USER_PASSWORD: getEnvVar("JWT_USER_PASSWORD"),
+    PORT: getEnvVar("PORT"),
+  };
+}

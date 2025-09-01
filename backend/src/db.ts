@@ -1,7 +1,11 @@
+import dotenv from "dotenv";
+dotenv.config();
 import mongoose from "mongoose";
-mongoose.connect(
-  "mongodb+srv://Rishabh:Wyrat_Kohli_18@cluster0.akno4.mongodb.net/Alzheimer"
-);
+import { getConfig } from "./config.js";
+const config = getConfig();
+console.log(config.DB_URL);
+const DB_URL = config.DB_URL;
+mongoose.connect(DB_URL);
 import { model, Schema } from "mongoose";
 const UserSchmea = new Schema({
   username: { type: String, unique: true },
