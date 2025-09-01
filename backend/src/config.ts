@@ -17,6 +17,3 @@ export const config: envConfig = {
   JWT_USER_PASSWORD: getEnvVar("JWT_USER_PASSWORD"),
   PORT: getEnvVar("PORT"),
 };
-// export const DB_URL: String | undefined = process.env.DB_URL;
-// export const JWT_USER_PASSWORD: String | undefined =
-//   process.env.JWT_USER_PASSWORD;
