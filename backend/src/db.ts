@@ -16,13 +16,19 @@ const UserSchmea = new Schema({
 });
 
 export const UserModel = model("User", UserSchmea);
-
+//TagSchema
+const TagSchema = new Schema({
+  title: { type: String, required: true, unique: true },
+});
+export const TagModel = model("Tag", TagSchema);
 //content schema
-const contentTypes = ["image", "video", "article", "audio", "posts"];
+const contentTypes = ["image", "video", "article", "audio", "post"];
 const ContentSchema = new Schema({
   link: { type: String, required: true },
   type: { type: String, enum: contentTypes, required: true },
   title: { type: String, required: true },
-  tags: [{ type: Types.ObjectId, ref: tag }],
+  tags: [{ type: Types.ObjectId, ref: "Tag" }],
   userId: { type: Types.ObjectId, ref: "User", required: true },
 });
+
+export const ContentModel = model("Content", ContentSchema);
