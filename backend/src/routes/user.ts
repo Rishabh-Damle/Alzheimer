@@ -1,4 +1,4 @@
-import expres from "express";
+import express from "express";
 import { Router } from "express";
 import { UserModel } from "../db.js";
 import { z } from "zod";
@@ -8,7 +8,7 @@ const config = getConfig();
 const JWT_USER_PASSWORD = config.JWT_USER_PASSWORD;
 import bcrypt from "bcrypt";
 export const userRouter = Router();
-userRouter.use(expres.json());
+userRouter.use(express.json());
 userRouter.post("/signup", async (req, res) => {
   //add zod validations,add password hashing,use try catch and etc more great things
   const { username, password } = req.body;
