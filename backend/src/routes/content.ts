@@ -2,11 +2,10 @@ import express from "express";
 import { Router } from "express";
 import { userAuth } from "../middlewares/userAuth.js";
 import { ContentModel } from "../db.js";
-import { TagModel } from "../db.js";
 export const contentRouter = Router();
 contentRouter.use(express.json());
 
-contentRouter.post("/createContent", userAuth, async (req, res) => {
+contentRouter.post("/createYourContent", userAuth, async (req, res) => {
   const userId = req.userId;
   const { link, type, title, tag } = req.body;
   const content = await ContentModel.create({
@@ -38,4 +37,24 @@ contentRouter.get("/getYourContent", userAuth, async (req, res) => {
   }
 
   res.status(200).json({ Message: "Take your content", Content: content });
+});
+
+contentRouter.delete("/deleteYourContent", userAuth, async (req, res) => {
+  const userId = req.userId;
+  const { contentId } = req.body;
+  console.log("contentId: " + contentId);
+  console.log("userId" + userId);
+  const contentForDelete = await ContentModel.findOne({
+    userId: userId,
+    _id: contentId,
+  });
+  if (!contentForDelete) {
+    res.status(404).json({ Error: `Your content is not found` });
+    return;
+  }
+  await ContentModel.deleteOne({
+    userId: userId,
+    _id: contentId,
+  });
+  res.status(200).json({ Message: `Your selected content has been deleted` });
 });
