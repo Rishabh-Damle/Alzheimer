@@ -21,3 +21,15 @@ contentRouter.post("/createContent", userAuth, async (req, res) => {
     contentId: content._id,
   });
 });
+//Fetching all existing documents (no pagination)
+contentRouter.get("/preivew", userAuth, async (req, res) => {
+  const contents = await ContentModel.find({});
+  if (!contents) {
+    res.status(404).json({
+      Error: `not found any contents`,
+    });
+    return;
+  }
+
+  res.status(200).json({ Contents: contents });
+});
