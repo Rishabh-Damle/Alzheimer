@@ -10,7 +10,7 @@ interface myJwtPayLoad {
 export function userAuth(req: Request, res: Response, next: NextFunction) {
   const token = req.headers["authorization"];
   if (!token) {
-    res.status(404).json({ Error: `Token is missing` });
+    res.status(404).json({ Error: `You are not loged-in` });
     return;
   }
   try {
@@ -19,6 +19,6 @@ export function userAuth(req: Request, res: Response, next: NextFunction) {
     console.log(decodedData);
     next();
   } catch (error) {
-    res.json({ message: "Invalid token!" });
+    res.json({ message: "Invalid credentials!" });
   }
 }
