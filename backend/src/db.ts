@@ -22,13 +22,26 @@ const TagSchema = new Schema({
 });
 export const TagModel = model("Tag", TagSchema);
 //content schema
+type Value = {
+  value: string;
+};
 const contentTypes = ["image", "video", "article", "audio", "post"];
 const ContentSchema = new Schema({
   link: { type: String, required: true },
   type: { type: String, enum: contentTypes, required: true },
   title: { type: String, required: true },
   // tags: [{ type: Types.ObjectId, ref: "Tag" }],
-  userId: { type: Types.ObjectId, ref: "User", required: true },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+    validate: async (value: Value) => {
+      const user = await UserModel.findById(value);
+      if (!user) {
+        throw new Error("User does not exist");
+      }
+    },
+  },
 });
 
 export const ContentModel = model("Content", ContentSchema);
