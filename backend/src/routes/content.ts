@@ -26,6 +26,9 @@ contentRouter.get("/getYourContent", userAuth, async (req, res) => {
   const userId = req.userId;
   const content = await ContentModel.find({
     userId: userId,
+  }).populate({
+    path: "userId",
+    select: "username",
   });
   if (!content) {
     res.status(404).json({
