@@ -35,13 +35,21 @@ const ContentSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
-    validate: async (value: Value) => {
-      const user = await UserModel.findById(value);
-      if (!user) {
-        throw new Error("User does not exist");
-      }
-    },
+    // validate: async (value: Value) => {
+    //   const user = await UserModel.findById(value);
+    //   if (!user) {
+    //     throw new Error("User does not exist");
+    //   }
+    // },
   },
+});
+
+ContentSchema.pre("save", async function (next) {
+  const user = await UserModel.findById(this.userId);
+  if (!user) {
+    throw new Error("User does not exist");
+  }
+  next();
 });
 
 export const ContentModel = model("Content", ContentSchema);
