@@ -8,6 +8,7 @@ const DB_URL = config.DB_URL;
 mongoose.connect(DB_URL);
 import { model, Schema } from "mongoose";
 import { required } from "zod/mini";
+import { string } from "zod";
 
 //user schema
 const UserSchmea = new Schema({
@@ -21,26 +22,23 @@ const TagSchema = new Schema({
   title: { type: String, required: true, unique: true },
 });
 export const TagModel = model("Tag", TagSchema);
+
+const LinkSchema = new Schema({
+  hash: { type: string, required: true },
+  userId: { type: mongoose.Types.ObjectId, ref: "User", required: true },
+});
+export const LinkModel = model("Link", LinkSchema);
 //content schema
-type Value = {
-  value: string;
-};
 const contentTypes = ["image", "video", "article", "audio", "post"];
 const ContentSchema = new Schema({
-  link: { type: String, required: true },
+  link: { type: String, ref: "Link", required: true },
   type: { type: String, enum: contentTypes, required: true },
   title: { type: String, required: true },
-  // tags: [{ type: Types.ObjectId, ref: "Tag" }],
+  tags: [{ type: mongoose.Types.ObjectId, ref: "Tag" }],
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
-    // validate: async (value: Value) => {
-    //   const user = await UserModel.findById(value);
-    //   if (!user) {
-    //     throw new Error("User does not exist");
-    //   }
-    // },
   },
 });
 

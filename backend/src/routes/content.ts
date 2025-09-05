@@ -1,17 +1,37 @@
 import express from "express";
 import { Router } from "express";
 import { userAuth } from "../middlewares/userAuth.js";
-import { ContentModel } from "../db.js";
+import { ContentModel, TagModel, LinkModel } from "../db.js";
 export const contentRouter = Router();
 contentRouter.use(express.json());
 
 contentRouter.post("/createYourContent", userAuth, async (req, res) => {
   const userId = req.userId;
-  const { link, type, title, tag } = req.body;
+  const { link, type, title } = req.body;
+  let Link = await LinkModel.findOne({
+    hash: link,
+  });
+  if (!Link) {
+    Link = await LinkModel.create({
+      hash: link,
+      userId: userId,
+    });
+  }
+
+  let Tag = await TagModel.findOne({
+    title: title,
+  });
+  if (!Tag) {
+    Tag = await TagModel.create({
+      title: title,
+    });
+  }
+
   const content = await ContentModel.create({
-    link: link,
+    link: Link._id,
     type: type,
     title: title,
+    tag: Tag._id,
     userId: userId,
   });
 
