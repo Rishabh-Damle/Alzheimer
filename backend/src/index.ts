@@ -5,6 +5,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { userRouter } from "./routes/user.js";
 import { contentRouter } from "./routes/content.js";
+import { brainRouter } from "./routes/brain.js";
 import { getConfig } from "./config.js";
 const config = getConfig();
 console.log("DB_URL from config:", config.DB_URL);
@@ -17,9 +18,7 @@ const app = express();
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/content", contentRouter);
-// app.post("/api/v1/content", async (req, res) => {});
-// app.get("/api/v1/content", async (req, res) => {});
-// app.delete("/api/v1/content", async (req, res) => {});
+app.use("/api/v1/brain", brainRouter);
 // app.post("/api/v1/brain/share", async (req, res) => {});
 // app.get("/api/v1/brain/:shareLink", async (req, res) => {});
 

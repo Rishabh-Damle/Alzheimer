@@ -9,11 +9,12 @@ contentRouter.post("/createYourContent", userAuth, async (req, res) => {
   const userId = req.userId;
   const { link, type, title } = req.body;
   let Link = await LinkModel.findOne({
-    hash: link,
+    link: link,
   });
+
   if (!Link) {
     Link = await LinkModel.create({
-      hash: link,
+      link: link,
       userId: userId,
     });
   }
