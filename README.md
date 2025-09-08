@@ -6,7 +6,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Frontend-React%20%2F%20Next.js-blue?style=for-the-badge&logo=react&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Backend-TypeScript%20%2B%20Node%2FExpress-green?style=for-the-badge&logo=typescript&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Backend-TypeScript%20%2B%20Node.js-green?style=for-the-badge&logo=typescript&logoColor=white"/>
   <img src="https://img.shields.io/badge/Database-MongoDB-darkgreen?style=for-the-badge&logo=mongodb&logoColor=white"/>
   <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge"/>
 </p>
@@ -23,7 +23,7 @@
 
 ---
 
-## 🚀 Tech Stack
+## 🛠 Tech Stack
 
 | Layer            | Technology                                  |
 | ---------------- | ------------------------------------------- |
@@ -35,9 +35,28 @@
 
 ---
 
-## 📂 Project Structure
+## 🚀 Getting Started
 
-```plaintext
+```bash
+# 1. Clone the repo
+git clone https://github.com/rishabhdamle/Alzheimer.git
+cd Alzheimer
+
+# 2. Install dependencies
+npm install
+
+3. Set environment variables
+
+Create a .env file:
+TWITTER_API_KEY=your_twitter_api_key
+YOUTUBE_API_KEY=your_youtube_api_key
+GOOGLE_DOCS_API_KEY=your_google_docs_api_key
+DB_URI=your_database_uri
+
+4. Run the app
+npm run dev
+
+📂 Project Structure
 alzheimer/
 │── src/
 │   ├── components/    # React components
@@ -48,9 +67,9 @@ alzheimer/
 │── package.json
 │── README.md
 
-📌 Future Enhancements
+🧑‍💻 Future Enhancements
 
-🤖 AI-powered search – Use embeddings for smart retrieval
+🤖 AI-powered search using embeddings
 
 🏷 Advanced tagging & categorization
 
@@ -67,6 +86,4 @@ Open an issue or submit a pull request to collaborate.
 
 Licensed under the MIT License
  – free to use & modify.
-
-
 ```
