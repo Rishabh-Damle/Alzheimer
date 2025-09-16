@@ -27,7 +27,7 @@ export const Button = (props: ButtonProps) => {
         sizeStyles[props.size]
       }`}
     >
-      <div className="flex ">
+      <div className="flex items-center">
         <div className="px-1">{props.startIcon}</div>
         <div className="px-1">{props.text}</div>
       </div>
