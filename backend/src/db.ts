@@ -24,9 +24,13 @@ const TagSchema = new Schema({
 export const TagModel = model("Tag", TagSchema);
 
 const LinkSchema = new Schema({
-  link: { type: string, required: true },
-  userId: { type: mongoose.Types.ObjectId, ref: "User", required: true },
-  permission: { type: Boolean, default: false },
+  hash: { type: string, required: true },
+  userId: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+    required: true,
+    unique: true,
+  },
 });
 export const LinkModel = model("Link", LinkSchema);
 //content schema
