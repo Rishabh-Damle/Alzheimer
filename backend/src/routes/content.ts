@@ -6,40 +6,33 @@ export const contentRouter = Router();
 contentRouter.use(express.json());
 
 contentRouter.post("/createYourContent", userAuth, async (req, res) => {
-  const userId = req.userId;
-  const { link, type, title } = req.body;
-  let Link = await LinkModel.findOne({
-    link: link,
-  });
+  try {
+    const userId = req.userId;
+    const { link, type, title, tag } = req.body;
 
-  if (!Link) {
-    Link = await LinkModel.create({
+    //checking whether user given all the fields or not
+    if (!link || !type || !title || tag) {
+      res.status(400).json({ message: "All fields are required" });
+      return;
+    }
+
+    const content = await ContentModel.create({
       link: link,
+      type: type,
+      title: title,
+      tags: tag,
       userId: userId,
     });
-  }
 
-  let Tag = await TagModel.findOne({
-    title: title,
-  });
-  if (!Tag) {
-    Tag = await TagModel.create({
-      title: title,
+    await content.save();
+    res.status(200).json({
+      message: "Content saved Successfully",
     });
+    return;
+  } catch (error) {
+    console.log("Err(catch): something went wrong", error);
+    return;
   }
-
-  const content = await ContentModel.create({
-    link: Link._id,
-    type: type,
-    title: title,
-    tag: Tag._id,
-    userId: userId,
-  });
-
-  res.status(200).json({
-    Message: `Your content is added succsesfully`,
-    contentId: content._id,
-  });
 });
 
 contentRouter.get("/getYourContent", userAuth, async (req, res) => {
