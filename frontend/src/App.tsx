@@ -5,7 +5,7 @@ import { ShareIcon } from "./components/icons/ShareIcon";
 import { Card } from "./components/card";
 function App() {
   return (
-    <div className="p-4">
+    <div className="bg-white dark:bg-gray-800 p-4 h-screen">
       <div className="flex justify-end gap-4 ">
         {" "}
         <SwitchButton
@@ -20,7 +20,7 @@ function App() {
         ></SwitchButton>
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex justify-center gap-4 m-10">
         <div>
           <Card
             type="twitter"
