@@ -3,9 +3,18 @@ import { SwitchButton } from "./components/SwitchButton";
 import { PlusIcon } from "./components/icons/PlusIcon";
 import { ShareIcon } from "./components/icons/ShareIcon";
 import { Card } from "./components/card";
+import { AddContentModel } from "./components/AddContentModel";
+import type { useState } from "react";
 function App() {
+  const [modelOpen, setModelOpen] = useState(true);
   return (
-    <div className="bg-white dark:bg-gray-800 p-4 h-screen">
+    <div className="p-4">
+      <AddContentModel
+        open={modelOpen}
+        onClose={() => {
+          setModelOpen(false);
+        }}
+      ></AddContentModel>
       <div className="flex justify-end gap-4 ">
         {" "}
         <SwitchButton
@@ -20,7 +29,7 @@ function App() {
         ></SwitchButton>
       </div>
 
-      <div className="flex justify-center gap-4 m-10">
+      <div className="flex gap-4 m-10">
         <div>
           <Card
             type="twitter"
