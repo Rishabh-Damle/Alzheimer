@@ -5,6 +5,7 @@ interface ButtonProps {
   variant: variants;
   text: string;
   startIcon?: ReactElement;
+  onClick: () => void;
 }
 
 //global object
@@ -20,7 +21,10 @@ const defaultStyles =
   "px-4 py-2 rounded-md cursor-pointer font-light flex items-center";
 export function SwitchButton(props: ButtonProps) {
   return (
-    <button className={variantClasses[props.variant] + " " + defaultStyles}>
+    <button
+      onClick={props.onClick}
+      className={variantClasses[props.variant] + " " + defaultStyles}
+    >
       <div className="pr-2">{props.startIcon}</div>
       {props.text}
     </button>

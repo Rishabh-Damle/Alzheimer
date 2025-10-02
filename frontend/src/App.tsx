@@ -4,7 +4,8 @@ import { PlusIcon } from "./components/icons/PlusIcon";
 import { ShareIcon } from "./components/icons/ShareIcon";
 import { Card } from "./components/card";
 import { AddContentModel } from "./components/AddContentModel";
-import type { useState } from "react";
+import { useState } from "react";
+
 function App() {
   const [modelOpen, setModelOpen] = useState(true);
   return (
@@ -18,6 +19,9 @@ function App() {
       <div className="flex justify-end gap-4 ">
         {" "}
         <SwitchButton
+          onClick={() => {
+            setModelOpen(true);
+          }}
           variant="primary"
           text="Add Content"
           startIcon={<PlusIcon size="md"></PlusIcon>}
