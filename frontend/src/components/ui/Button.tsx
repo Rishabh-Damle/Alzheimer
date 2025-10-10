@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-
+import clsx from "clsx";
 type variants = "primary" | "secondary";
 
 interface ButtonProps {
@@ -9,6 +9,8 @@ interface ButtonProps {
   startIcon?: ReactElement;
   endIcon?: ReactElement;
   onclick?: () => void;
+  fullWidth?: boolean;
+  loading?: boolean;
 }
 const buttonVariants = {
   primary: "bg-purple-600 text-white",
@@ -25,7 +27,10 @@ export const Button = (props: ButtonProps) => {
     <button
       className={`${buttonVariants[props.variant]} ${defaultStyles} ${
         sizeStyles[props.size]
+      } ${props.fullWidth ? "w-full flex justify-center items-center" : ""} ${
+        props.loading ? "opacity-45" : ""
       }`}
+      disabled={props.loading}
     >
       <div className="flex items-center">
         <div className="px-1">{props.startIcon}</div>

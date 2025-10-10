@@ -5,7 +5,7 @@ interface ButtonProps {
   variant: variants;
   text: string;
   startIcon?: ReactElement;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 //global object

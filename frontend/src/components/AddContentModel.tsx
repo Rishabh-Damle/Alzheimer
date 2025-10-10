@@ -1,6 +1,7 @@
 //controlled component
 import { CrossIcon } from "./icons/CrossIcon";
 import { Button } from "./ui/Button";
+import { Input } from "./Input";
 interface EventType {
   open: Boolean;
   onClose?: () => void;
@@ -29,15 +30,3 @@ export const AddContentModel = ({ open, onClose }: EventType) => {
     </div>
   );
 };
-function Input({ onChange, placeholder }: { onChange: () => void }) {
-  return (
-    <div>
-      <input
-        type={"text"}
-        className="px-4 py-2 border-2  rounded m-2 outline-none border-purple-600"
-        onChange={onChange}
-        placeholder={placeholder}
-      />
-    </div>
-  );
-}
