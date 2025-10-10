@@ -11,10 +11,9 @@ function App() {
   const [modelOpen, setModelOpen] = useState(false);
   return (
     <div>
-      <div>
-        <Sidebar></Sidebar>
-      </div>
-      <div className="p-4 ml-64 min-h-screen bg-gray-100">
+      <Sidebar></Sidebar>
+
+      <div className="p-4 ml-72 min-h-screen bg-gray-100 ">
         <AddContentModel
           open={modelOpen}
           onClose={() => {
