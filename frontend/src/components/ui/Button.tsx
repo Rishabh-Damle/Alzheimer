@@ -1,5 +1,4 @@
 import type { ReactElement } from "react";
-import clsx from "clsx";
 type variants = "primary" | "secondary";
 
 interface ButtonProps {
@@ -8,7 +7,7 @@ interface ButtonProps {
   text: string;
   startIcon?: ReactElement;
   endIcon?: ReactElement;
-  onclick?: () => void;
+  onClick?: () => void;
   fullWidth?: boolean;
   loading?: boolean;
 }
@@ -25,6 +24,7 @@ const sizeStyles = {
 export const Button = (props: ButtonProps) => {
   return (
     <button
+      onClick={props.onClick}
       className={`${buttonVariants[props.variant]} ${defaultStyles} ${
         sizeStyles[props.size]
       } ${props.fullWidth ? "w-full flex justify-center items-center" : ""} ${
