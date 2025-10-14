@@ -3,11 +3,13 @@ import { BACKEND_URL } from "../config";
 import { useRef } from "react";
 import { Input } from "../components/Input";
 import { Button } from "../components/ui/Button";
+import { useNavigate } from "react-router-dom";
 
 export const Signup = () => {
   console.log("stuck");
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
   console.log(usernameRef);
   console.log(passwordRef);
   async function signup() {
@@ -22,6 +24,7 @@ export const Signup = () => {
       });
       console.log(response.data);
       alert("You have signed up");
+      navigate("/signin");
     } catch (error) {
       console.error("Signup failed : ", error);
       alert("Signup failed");

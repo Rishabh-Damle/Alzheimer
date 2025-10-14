@@ -82,5 +82,6 @@ userRouter.post("/signin", async (req, res) => {
     { userId: existingUser._id.toString() },
     JWT_USER_PASSWORD
   );
+  console.log("Backend token " + token);
   res.status(200).json({ Token: token });
 });
