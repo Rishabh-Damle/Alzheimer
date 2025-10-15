@@ -44,13 +44,6 @@ export function Dashboard() {
               link="https://x.com/GautamGambhir/status/1972387249368318462"
             ></Card>
           </div>
-          <div>
-            <Card
-              type="youtube"
-              title="Primagen's vedio"
-              link="https://www.youtube.com/embed/F1KgHCSpT_0?si=QCS2r7fxNWRerXhC"
-            ></Card>
-          </div>
         </div>
       </div>
     </div>

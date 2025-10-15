@@ -3,7 +3,7 @@ type variants = "primary" | "secondary";
 
 interface ButtonProps {
   variant: variants;
-  size: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg";
   text: string;
   startIcon?: ReactElement;
   endIcon?: ReactElement;

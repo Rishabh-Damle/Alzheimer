@@ -21,7 +21,7 @@ export const Signin = () => {
         username,
         password,
       });
-      localStorage.setItem("Token:", response.data.Token);
+      localStorage.setItem("Token", response.data.Token);
       //redirect the user to dashboard
       navigate("/dashboard");
     } catch (error) {

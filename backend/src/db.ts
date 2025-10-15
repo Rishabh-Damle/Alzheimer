@@ -34,7 +34,15 @@ const LinkSchema = new Schema({
 });
 export const LinkModel = model("Link", LinkSchema);
 //content schema
-const contentTypes = ["image", "video", "article", "audio", "post"];
+const contentTypes = [
+  "image",
+  "video",
+  "article",
+  "audio",
+  "post",
+  "Youtube",
+  "Twitter",
+];
 const ContentSchema = new Schema({
   link: { type: String, ref: "Link", required: true },
   type: { type: String, enum: contentTypes, required: true },

@@ -8,10 +8,10 @@ contentRouter.use(express.json());
 contentRouter.post("/createYourContent", userAuth, async (req, res) => {
   try {
     const userId = req.userId;
-    const { link, type, title, tag } = req.body;
+    const { link, type, title } = req.body;
 
     //checking whether user given all the fields or not
-    if (!link || !type || !title || tag) {
+    if (!link || !type || !title) {
       res.status(400).json({ message: "All fields are required" });
       return;
     }
@@ -20,7 +20,6 @@ contentRouter.post("/createYourContent", userAuth, async (req, res) => {
       link: link,
       type: type,
       title: title,
-      tags: tag,
       userId: userId,
     });
 
