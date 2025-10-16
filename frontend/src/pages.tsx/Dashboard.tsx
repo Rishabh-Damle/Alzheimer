@@ -3,11 +3,19 @@ import { PlusIcon } from "../components/icons/PlusIcon";
 import { ShareIcon } from "../components/icons/ShareIcon";
 import { Card } from "../components/card";
 import { AddContentModel } from "../components/AddContentModel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Sidebar } from "../components/Sidebar";
+import { useContent } from "../hooks/useContent";
+import { title } from "process";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 export function Dashboard() {
   const [modelOpen, setModelOpen] = useState(false);
+  const { contents, refresh } = useContent();
+  useEffect(() => {
+    refresh();
+  }, [modelOpen]);
   return (
     <div>
       <Sidebar></Sidebar>
@@ -33,17 +41,30 @@ export function Dashboard() {
             variant="secondary"
             text="Share Brain"
             startIcon={<ShareIcon size="md"></ShareIcon>}
+            onClick={async () => {
+              const response = await axios.post(
+                `${BACKEND_URL}/api/v1/brain/share`,
+                {
+                  share: true,
+                },
+                {
+                  headers: {
+                    Authorization: localStorage.getItem("Token"),
+                  },
+                }
+              );
+              const shareUrl = `http://localhost:5173/share/${response.data.hash}`;
+              console.log(shareUrl);
+              alert(shareUrl);
+            }}
           ></SwitchButton>
         </div>
 
-        <div className="flex gap-4 m-10">
-          <div>
-            <Card
-              type="twitter"
-              title="First tweet"
-              link="https://x.com/GautamGambhir/status/1972387249368318462"
-            ></Card>
-          </div>
+        <div className="flex flex-wrap gap-4 m-10">
+          {/* {JSON.stringify(contents)} */}
+          {contents.map(({ _id, type, link, title }) => (
+            <Card type={type} title={title} link={link} key={_id}></Card>
+          ))}
         </div>
       </div>
     </div>

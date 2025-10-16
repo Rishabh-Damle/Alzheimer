@@ -32,7 +32,9 @@ export const AddContentModel = ({ open, onClose }: EventType) => {
         },
       }
     );
+
     console.log(response.data);
+    onClose();
   }
   return (
     <div>

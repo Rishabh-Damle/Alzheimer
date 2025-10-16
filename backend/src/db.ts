@@ -34,18 +34,10 @@ const LinkSchema = new Schema({
 });
 export const LinkModel = model("Link", LinkSchema);
 //content schema
-const contentTypes = [
-  "image",
-  "video",
-  "article",
-  "audio",
-  "post",
-  "Youtube",
-  "Twitter",
-];
+const contentTypes = ["Youtube", "Twitter"];
 const ContentSchema = new Schema({
   link: { type: String, ref: "Link", required: true },
-  type: { type: String, enum: contentTypes, required: true },
+  type: { type: String, require: true },
   title: { type: String, required: true },
   tags: [{ type: mongoose.Types.ObjectId, ref: "Tag" }],
   userId: {

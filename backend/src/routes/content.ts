@@ -23,10 +23,13 @@ contentRouter.post("/createYourContent", userAuth, async (req, res) => {
       userId: userId,
     });
 
-    await content.save();
-    res.status(200).json({
-      message: "Content saved Successfully",
-    });
+    console.log(content);
+    if (content) {
+      res.status(200).json({
+        message: "Content saved Successfully",
+      });
+    }
+
     return;
   } catch (error) {
     console.log("Err(catch): something went wrong", error);
@@ -49,7 +52,8 @@ contentRouter.get("/getYourContent", userAuth, async (req, res) => {
     return;
   }
 
-  res.status(200).json({ Message: "Take your content", Content: content });
+  res.status(200).json({ Message: "Take your content", content });
+  console.log(content);
 });
 
 contentRouter.delete("/deleteYourContent", userAuth, async (req, res) => {

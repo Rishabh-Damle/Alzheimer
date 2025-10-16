@@ -3,7 +3,7 @@ import { ShareIcon } from "./icons/ShareIcon";
 interface CardProps {
   title: string;
   link: string;
-  type: "twitter" | "youtube";
+  type: "Twitter" | "Youtube";
 }
 export function Card(props: CardProps) {
   return (
@@ -28,7 +28,7 @@ export function Card(props: CardProps) {
           </div>
         </div>
         <div className="pt-4">
-          {props.type == "youtube" && (
+          {props.type == "Youtube" && (
             <iframe
               className="w-full rounded"
               src={props.link.replace("watch", "embed").replace("/v=", "/")}
@@ -40,7 +40,7 @@ export function Card(props: CardProps) {
             ></iframe>
           )}
 
-          {props.type == "twitter" && (
+          {props.type == "Twitter" && (
             <blockquote className="twitter-tweet">
               <a href={props.link.replace("x.com", "twitter.com")}></a>
             </blockquote>
