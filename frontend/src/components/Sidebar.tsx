@@ -6,11 +6,11 @@ import { SidebarItem } from "./SidebarItem";
 export const Sidebar = () => {
   return (
     <div className="h-screen bg-white w-72 fixed left-0 top-0 border-r border-white shadow pl-4">
-      <div className="text-2xl font-bold font-mono p-2 pt-6 flex items-center">
-        <div className="pr-4 text-purple-600">
+      <div className="text-3xl font-bold p-2 pt-6 flex items-center">
+        <div className="pr-4 text-purple-600 text-shadow-xs">
           <Logo></Logo>
         </div>
-        <div className="text-purple-600">Alzheimer</div>
+        <div className="text-purple-600 text-shadow-xs">Alzheimer</div>
       </div>
       <div className="pt-4 pl-4">
         <SidebarItem
