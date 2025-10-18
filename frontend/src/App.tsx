@@ -3,13 +3,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Dashboard } from "./pages.tsx/Dashboard";
 import { Signup } from "./pages.tsx/Signup";
 import { Signin } from "./pages.tsx/Signin";
+import { Landing } from "./pages.tsx/Landing";
 function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Signin></Signin>}></Route>
+          <Route path="/" element={<Landing></Landing>}></Route>
           <Route path="/signup" element={<Signup></Signup>}></Route>
+          <Route path="/signin" element={<Signin></Signin>}></Route>
           <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
         </Routes>
       </BrowserRouter>

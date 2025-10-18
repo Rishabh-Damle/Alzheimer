@@ -3,7 +3,7 @@ import { BACKEND_URL } from "../config";
 import { useRef } from "react";
 import { Input } from "../components/Input";
 import { Button } from "../components/ui/Button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Logo } from "../components/icons/Logo";
 
 export const Signup = () => {
@@ -25,7 +25,7 @@ export const Signup = () => {
       });
       console.log(response.data);
       alert("You have signed up");
-      navigate("/");
+      navigate("/signin");
     } catch (error) {
       console.error("Signup failed : ", error);
       alert("Signup failed");
@@ -39,7 +39,7 @@ export const Signup = () => {
         </div>
         <div className="text-purple-600 text-shadow-xs">Alzheimer</div>
       </div>
-      <div className="flex justify-center items-center">
+      <div className="flex flex-col justify-center items-center">
         <div className="bg-white rounded-xl min-w-48 p-8 borderl">
           <Input reference={usernameRef} placeholder="Username"></Input>
           <Input reference={passwordRef} placeholder="Password"></Input>
@@ -54,6 +54,12 @@ export const Signup = () => {
             ></Button>
           </div>
         </div>
+        <span className="text-sm text-neutral-700 py-6">
+          Already have an account?{" "}
+          <span className="text-purple-600 font-semibold">
+            <Link to="/signin">Signin</Link>
+          </span>
+        </span>
       </div>
     </div>
   );
