@@ -2,6 +2,7 @@ import express from "express";
 import { Router } from "express";
 import { userAuth } from "../middlewares/userAuth.js";
 import { ContentModel, TagModel, LinkModel } from "../db.js";
+import mongoose from "mongoose";
 export const contentRouter = Router();
 contentRouter.use(express.json());
 
@@ -27,6 +28,7 @@ contentRouter.post("/createYourContent", userAuth, async (req, res) => {
     if (content) {
       res.status(200).json({
         message: "Content saved Successfully",
+        content,
       });
     }
 
@@ -57,21 +59,15 @@ contentRouter.get("/getYourContent", userAuth, async (req, res) => {
 });
 
 contentRouter.delete("/deleteYourContent", userAuth, async (req, res) => {
-  const userId = req.userId;
-  const { contentId } = req.body;
-  console.log("contentId: " + contentId);
-  console.log("userId" + userId);
-  const contentForDelete = await ContentModel.findOne({
-    userId: userId,
+  const contentId = req.body.contentId;
+
+  await ContentModel.deleteMany({
     _id: contentId,
+    //@ts-ignore
+    userId: req.userId,
   });
-  if (!contentForDelete) {
-    res.status(404).json({ Error: `Your content is not found` });
-    return;
-  }
-  await ContentModel.deleteOne({
-    userId: userId,
-    _id: contentId,
+
+  res.json({
+    message: "Content deleted",
   });
-  res.status(200).json({ Message: `Your selected content has been deleted` });
 });

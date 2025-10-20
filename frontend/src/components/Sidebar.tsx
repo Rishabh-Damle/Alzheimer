@@ -1,9 +1,15 @@
+import { AllContentsIcon } from "./icons/AllContentIcon";
 import { DocumentsIcon } from "./icons/DocumentsIcon";
+import { GithubIcon } from "./icons/GithubIcon";
 import { Logo } from "./icons/Logo";
 import { TwitterIcon } from "./icons/TwitterIcon";
 import { YoutubeIcon } from "./icons/YoutubeIcon";
 import { SidebarItem } from "./SidebarItem";
-export const Sidebar = () => {
+
+interface SidebarProps {
+  setTypeFilter: (type: string | null) => void;
+}
+export const Sidebar = ({ setTypeFilter }: SidebarProps) => {
   return (
     <div className="h-screen bg-white w-72 fixed left-0 top-0 border-r border-white shadow pl-4">
       <div className="text-3xl font-bold p-2 pt-6 flex items-center">
@@ -13,18 +19,53 @@ export const Sidebar = () => {
         <div className="text-purple-600 text-shadow-xs">Alzheimer</div>
       </div>
       <div className="pt-4 pl-4">
-        <SidebarItem
-          icon={<TwitterIcon></TwitterIcon>}
-          text="Tweets"
-        ></SidebarItem>
-        <SidebarItem
-          icon={<YoutubeIcon></YoutubeIcon>}
-          text="Videos"
-        ></SidebarItem>
-        <SidebarItem
-          icon={<DocumentsIcon></DocumentsIcon>}
-          text="Documents"
-        ></SidebarItem>
+        <div onClick={() => setTypeFilter(null)}>
+          <SidebarItem
+            icon={<AllContentsIcon></AllContentsIcon>}
+            text="All contents"
+          ></SidebarItem>
+        </div>
+        <div
+          onClick={() => {
+            setTypeFilter("Youtube");
+          }}
+        >
+          <SidebarItem
+            icon={<YoutubeIcon></YoutubeIcon>}
+            text="Youtube"
+          ></SidebarItem>
+        </div>
+        <div
+          onClick={() => {
+            setTypeFilter("Twitter");
+          }}
+        >
+          {" "}
+          <SidebarItem
+            icon={<TwitterIcon></TwitterIcon>}
+            text="Twitter"
+          ></SidebarItem>
+        </div>
+        <div
+          onClick={() => {
+            setTypeFilter("Github");
+          }}
+        >
+          <SidebarItem
+            icon={<GithubIcon></GithubIcon>}
+            text="GitHub"
+          ></SidebarItem>
+        </div>
+        <div
+          onClick={() => {
+            setTypeFilter("Documents");
+          }}
+        >
+          <SidebarItem
+            icon={<DocumentsIcon></DocumentsIcon>}
+            text="Documents"
+          ></SidebarItem>
+        </div>
       </div>
     </div>
   );

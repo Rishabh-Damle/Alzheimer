@@ -9,16 +9,21 @@ import { useContent } from "../hooks/useContent";
 import { title } from "process";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
-
+import { ContentType } from "../enums/ContentType";
 export function Dashboard() {
   const [modelOpen, setModelOpen] = useState(false);
-  const { contents, refresh } = useContent();
+  const { contents, refresh, deleteContent } = useContent();
+  const [typeFilter, setTypeFilter] = useState<string | null>(null);
+  const filteredContents = contents.filter((c) =>
+    typeFilter === null ? true : c.type === typeFilter
+  );
+
   useEffect(() => {
     refresh();
   }, [modelOpen]);
   return (
     <div>
-      <Sidebar></Sidebar>
+      <Sidebar setTypeFilter={setTypeFilter} />
 
       <div className="p-4 ml-72 min-h-screen bg-gray-100 ">
         <AddContentModel
@@ -61,9 +66,15 @@ export function Dashboard() {
         </div>
 
         <div className="flex flex-wrap gap-4 m-10">
-          {/* {JSON.stringify(contents)} */}
-          {contents.map(({ _id, type, link, title }) => (
-            <Card type={type} title={title} link={link} key={_id}></Card>
+          {filteredContents.map(({ _id, type, link, title }) => (
+            <Card
+              type={type}
+              title={title}
+              link={link}
+              key={_id}
+              id={_id}
+              onDelete={(id) => deleteContent(id)}
+            />
           ))}
         </div>
       </div>
