@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BACKEND_URL } from "../config";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Input } from "../components/Input";
 import { Button } from "../components/ui/Button";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,6 +10,8 @@ export const Signup = () => {
   console.log("stuck");
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const navigate = useNavigate();
   console.log(usernameRef);
   console.log(passwordRef);
@@ -27,8 +29,8 @@ export const Signup = () => {
       alert("You have signed up");
       navigate("/signin");
     } catch (error) {
-      console.error("Signup failed : ", error);
-      alert("Signup failed");
+      console.error("Signup failed:", error);
+      setErrorMessage("Signup failed. Please try again.");
     }
   }
   return (
@@ -40,9 +42,19 @@ export const Signup = () => {
         <div className="text-purple-600 text-shadow-xs">Alzheimer</div>
       </div>
       <div className="flex flex-col justify-center items-center">
-        <div className="bg-white rounded-xl min-w-48 p-8 borderl">
+        <div className="bg-white rounded-xl min-w-48 p-8 border border-purple-600">
           <Input reference={usernameRef} placeholder="Username"></Input>
+          <div className="text-gray-500 text-xs text-start italic px-3 ">
+            {" "}
+            Username: 5–100 characters long.
+          </div>
           <Input reference={passwordRef} placeholder="Password"></Input>
+
+          <div className="text-gray-500 text-xs text-start italic px-3 ">
+            {" "}
+            Password: 8–16 chars with upper, <br></br>lower & special symbol.
+          </div>
+
           <div className="flex justify-center pt-4">
             <Button
               variant="primary"
@@ -53,6 +65,11 @@ export const Signup = () => {
               onClick={signup}
             ></Button>
           </div>
+          {errorMessage && (
+            <p className="text-red-500 text-sm mt-3 px-3 text-center">
+              {errorMessage}
+            </p>
+          )}
         </div>
         <span className="text-sm text-neutral-700 py-6">
           Already have an account?{" "}

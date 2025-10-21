@@ -8,8 +8,9 @@ import { Sidebar } from "../components/Sidebar";
 import { useContent } from "../hooks/useContent";
 import { title } from "process";
 import axios from "axios";
-import { BACKEND_URL } from "../config";
+import { BACKEND_URL, SITE_URL } from "../config";
 import { ContentType } from "../enums/ContentType";
+import { div } from "motion/react-client";
 export function Dashboard() {
   const [modelOpen, setModelOpen] = useState(false);
   const { contents, refresh, deleteContent } = useContent();
@@ -18,9 +19,61 @@ export function Dashboard() {
     typeFilter === null ? true : c.type === typeFilter
   );
 
+  const [shareLink, setShareLink] = useState<string | null>(null);
+  const [shareLoading, setShareLoading] = useState(false);
+
   useEffect(() => {
     refresh();
   }, [modelOpen]);
+  useEffect(() => {
+    async function fetchShareStatus() {
+      try {
+        const response = await axios.get(`${BACKEND_URL}/api/v1/brain/share`, {
+          headers: { Authorization: localStorage.getItem("Token") },
+        });
+        if ((response as any).data.hash) {
+          setShareLink(`${SITE_URL}/share/${(response as any).data.hash}`);
+        } else {
+          setShareLink(null);
+        }
+      } catch {
+        setShareLink(null);
+      }
+    }
+    fetchShareStatus();
+  }, []);
+
+  async function handleShareOn() {
+    setShareLoading(true);
+    try {
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/brain/share`,
+        {
+          share: true,
+        },
+        { headers: { Authorization: localStorage.getItem("Token") } }
+      );
+      setShareLink(`${SITE_URL}/share/${(response as any).data.hash}`);
+    } finally {
+      setShareLoading(false);
+    }
+  }
+
+  async function handleShareOff() {
+    setShareLoading(true);
+    try {
+      await axios.post(
+        `${BACKEND_URL}/api/v1/brain/share`,
+        { share: false },
+        {
+          headers: { Authorization: localStorage.getItem("Token") },
+        }
+      );
+      setShareLink(null);
+    } finally {
+      setShareLoading(false);
+    }
+  }
   return (
     <div>
       <Sidebar setTypeFilter={setTypeFilter} />
@@ -42,27 +95,43 @@ export function Dashboard() {
             text="Add Content"
             startIcon={<PlusIcon size="md"></PlusIcon>}
           ></SwitchButton>
-          <SwitchButton
-            variant="secondary"
-            text="Share Brain"
-            startIcon={<ShareIcon size="md"></ShareIcon>}
-            onClick={async () => {
-              const response = await axios.post(
-                `${BACKEND_URL}/api/v1/brain/share`,
-                {
-                  share: true,
-                },
-                {
-                  headers: {
-                    Authorization: localStorage.getItem("Token"),
-                  },
-                }
-              );
-              const shareUrl = `http://localhost:5173/share/${response.data.hash}`;
-              console.log(shareUrl);
-              alert(shareUrl);
-            }}
-          ></SwitchButton>
+          {shareLink ? (
+            <>
+              <SwitchButton
+                onClick={handleShareOff}
+                variant="secondary"
+                text="Stop sharing"
+                startIcon={<ShareIcon size="md" />}
+                loading={shareLoading}
+              />
+              <div className="flex items-center gap-2 bg-white px-2 py-1 rounded shadow border border-purple-600 text-sm max-w-full overflow-x-auto">
+                <span>Share link:</span>
+                <a
+                  href={shareLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline truncate max-w-[200px]"
+                >
+                  {shareLink}
+                </a>
+                <SwitchButton
+                  onClick={() => {
+                    navigator.clipboard.writeText(shareLink);
+                  }}
+                  variant="primary"
+                  text="Copy"
+                />
+              </div>
+            </>
+          ) : (
+            <SwitchButton
+              onClick={handleShareOn}
+              variant="secondary"
+              text="Share brain"
+              startIcon={<ShareIcon size="md" />}
+              loading={shareLoading}
+            />
+          )}
         </div>
 
         <div className="flex flex-wrap gap-4 m-10">

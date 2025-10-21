@@ -13,12 +13,12 @@ userRouter.post("/signup", async (req, res) => {
   //add zod validations,add password hashing,use try catch and etc more great things
   const { username, password } = req.body;
 
-  if (!username || !password) {
-    res.status(404).json({
-      Error: `please add all the credentials that all are neccsesarry`,
-    });
-    return;
-  }
+  // if (!username || !password) {
+  //   res.status(404).json({
+  //     Error: `please add all the credentials that all are neccsesarry`,
+  //   });
+  //   return;
+  // }
 
   const requiredBody = z.object({
     username: z.string().min(5).max(100),

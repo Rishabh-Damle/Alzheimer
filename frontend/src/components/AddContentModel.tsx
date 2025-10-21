@@ -42,13 +42,13 @@ export const AddContentModel = ({ open, onClose }: EventType) => {
         <div>
           <div className="w-screen h-screen bg-slate-500 opacity-80 fixed top-0 left-0 flex  justify-center items-center"></div>
           <div>
-            <div className="w-screen h-screen  opacity-100 fixed top-0 left-0 flex  justify-center items-center">
+            <div className="w-screen h-screen  opacity-100 fixed top-0 left-0 flex  justify-center items-center ">
               <div className="flex flex-col justify-center ">
-                <span className="bg-neutral-100 opacity-100 p-4 rounded-lg">
+                <span className="bg-neutral-100 opacity-100 p-4 rounded-xl border border-purple-600">
                   <div className="flex justify-end" onClick={onClose}>
                     <CrossIcon></CrossIcon>
                   </div>
-                  <div className="p-2.5">
+                  <div className="p-2.5 flex flex-col justify-center items-center">
                     <Input reference={titleRef} placeholder={"Title"}></Input>
                     <Input reference={linkRef} placeholder={"Link"}></Input>
                   </div>
@@ -56,7 +56,7 @@ export const AddContentModel = ({ open, onClose }: EventType) => {
                     <h1 className="text-center font-bold text-xl text-neutral-600">
                       [Type]
                     </h1>
-                    <div className="flex gap-1 p-4 justify-center pb-2">
+                    <div className="flex gap-3 p-4 justify-center pb-2">
                       <Button
                         text="Youtube"
                         variant={

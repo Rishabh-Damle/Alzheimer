@@ -5,6 +5,7 @@ import { ContentModel, LinkModel, UserModel } from "../db.js";
 import { random } from "../utils.js";
 export const brainRouter = Router();
 brainRouter.use(express.json());
+
 brainRouter.post("/share", userAuth, async (req, res) => {
   const { share } = req.body;
   if (share) {
@@ -13,13 +14,13 @@ brainRouter.post("/share", userAuth, async (req, res) => {
       userId: req.userId,
     });
     if (existingLink) {
-      res.status(409).json({
-        error: "Sharable link already exists",
-        link: existingLink.hash,
+      res.json({
+        hash: existingLink.hash,
       });
       return;
     }
-    const hash = random(20);
+    const hash = random(8);
+    console.log("Generated hash:", hash);
     await LinkModel.create({
       userId: req.userId,
       hash: hash,
@@ -57,6 +58,13 @@ brainRouter.get("/share/:shareLink", async (req, res) => {
   const user = await UserModel.findOne({
     _id: link.userId,
   });
+
+  if (!user) {
+    res.status(411).json({
+      message: "User not found , error should ideally not happen",
+    });
+    return;
+  }
 
   res.status(200).json({
     message: "Data fetched successfully",

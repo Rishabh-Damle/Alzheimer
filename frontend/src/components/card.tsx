@@ -5,6 +5,7 @@ import { ShareIcon } from "./icons/ShareIcon";
 import { TwitterIcon } from "./icons/TwitterIcon";
 import { YoutubeIcon } from "./icons/YoutubeIcon";
 import { DeleteIcon } from "./icons/DeleteIcon";
+import { InstagramEmbed } from "./InstagramEmbed";
 declare global {
   interface Window {
     twttr?: any;
@@ -13,7 +14,7 @@ declare global {
 interface CardProps {
   title: string;
   link: string;
-  type: "Twitter" | "Youtube" | "Document" | "Github";
+  type: "Twitter" | "Youtube" | "Document" | "Github" | "Instagram";
   id: string;
   onDelete?: (id: string) => void;
 }
@@ -59,7 +60,7 @@ export function Card(props: CardProps) {
           {props.type === "Youtube" && (
             <iframe
               className="w-full rounded"
-              src={props.link.replace("watch", "embed").replace("/v=", "/")}
+              src={props.link.replace("watch", "embed").replace("?v=", "/")}
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -68,11 +69,16 @@ export function Card(props: CardProps) {
             ></iframe>
           )}
 
-          {props.type == "Twitter" && (
-            <blockquote className="twitter-tweet">
-              <a href={props.link.replace("x.com", "twitter.com")}></a>
-            </blockquote>
-          )}
+          <div className="w-full rounded pt-4">
+            {props.type === "Twitter" && (
+              <blockquote
+                className="twitter-tweet"
+                style={{ maxWidth: "100%" }}
+              >
+                <a href={props.link.replace("x.com", "twitter.com")}></a>
+              </blockquote>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -6,6 +6,9 @@ interface ButtonProps {
   text: string;
   startIcon?: ReactElement;
   onClick?: () => void;
+  fullWidth?: boolean;
+  loading?: boolean;
+  disabled?: boolean;
 }
 
 //global object

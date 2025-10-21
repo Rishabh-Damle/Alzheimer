@@ -1,6 +1,7 @@
 import { AllContentsIcon } from "./icons/AllContentIcon";
 import { DocumentsIcon } from "./icons/DocumentsIcon";
 import { GithubIcon } from "./icons/GithubIcon";
+import { InstagramIcon } from "./icons/InstagramIcon";
 import { Logo } from "./icons/Logo";
 import { TwitterIcon } from "./icons/TwitterIcon";
 import { YoutubeIcon } from "./icons/YoutubeIcon";
@@ -44,26 +45,6 @@ export const Sidebar = ({ setTypeFilter }: SidebarProps) => {
           <SidebarItem
             icon={<TwitterIcon></TwitterIcon>}
             text="Twitter"
-          ></SidebarItem>
-        </div>
-        <div
-          onClick={() => {
-            setTypeFilter("Github");
-          }}
-        >
-          <SidebarItem
-            icon={<GithubIcon></GithubIcon>}
-            text="GitHub"
-          ></SidebarItem>
-        </div>
-        <div
-          onClick={() => {
-            setTypeFilter("Documents");
-          }}
-        >
-          <SidebarItem
-            icon={<DocumentsIcon></DocumentsIcon>}
-            text="Documents"
           ></SidebarItem>
         </div>
       </div>
