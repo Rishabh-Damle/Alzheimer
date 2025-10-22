@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BACKEND_URL } from "../config";
-import { div } from "motion/react-client";
 import { Card } from "../components/card";
 export const ShareBrain = () => {
   const { shareId } = useParams();

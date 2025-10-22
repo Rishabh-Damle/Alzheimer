@@ -5,13 +5,12 @@ import { ShareIcon } from "./icons/ShareIcon";
 import { TwitterIcon } from "./icons/TwitterIcon";
 import { YoutubeIcon } from "./icons/YoutubeIcon";
 import { DeleteIcon } from "./icons/DeleteIcon";
-import { InstagramEmbed } from "./InstagramEmbed";
 declare global {
   interface Window {
     twttr?: any;
   }
 }
-interface CardProps {
+export interface CardProps {
   title: string;
   link: string;
   type: "Twitter" | "Youtube" | "Document" | "Github" | "Instagram";

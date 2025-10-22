@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
-import { Signup } from "../pages.tsx/Signup";
+
 import { Logo } from "./icons/Logo";
-import { Button } from "./ui/Button";
 
 export const NavBar = () => {
   return (

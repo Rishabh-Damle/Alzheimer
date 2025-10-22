@@ -1,0 +1,1 @@
+{"version":3,"file":"userAuth.d.ts","sourceRoot":"","sources":["../../src/middlewares/userAuth.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,OAAO,EAAE,QAAQ,EAAE,YAAY,EAAE,MAAM,SAAS,CAAC;AAO/D,wBAAgB,QAAQ,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ,EAAE,IAAI,EAAE,YAAY,QAcvE"}

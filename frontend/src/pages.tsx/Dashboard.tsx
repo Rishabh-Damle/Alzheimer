@@ -6,11 +6,8 @@ import { AddContentModel } from "../components/AddContentModel";
 import { useEffect, useState } from "react";
 import { Sidebar } from "../components/Sidebar";
 import { useContent } from "../hooks/useContent";
-import { title } from "process";
 import axios from "axios";
 import { BACKEND_URL, SITE_URL } from "../config";
-import { ContentType } from "../enums/ContentType";
-import { div } from "motion/react-client";
 export function Dashboard() {
   const [modelOpen, setModelOpen] = useState(false);
   const { contents, refresh, deleteContent } = useContent();
@@ -137,7 +134,14 @@ export function Dashboard() {
         <div className="flex flex-wrap gap-4 m-10">
           {filteredContents.map(({ _id, type, link, title }) => (
             <Card
-              type={type}
+              type={
+                type as
+                  | "Twitter"
+                  | "Youtube"
+                  | "Document"
+                  | "Github"
+                  | "Instagram"
+              }
               title={title}
               link={link}
               key={_id}

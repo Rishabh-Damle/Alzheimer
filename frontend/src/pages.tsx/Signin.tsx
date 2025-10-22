@@ -5,7 +5,6 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../components/icons/Logo";
-import { Signup } from "./Signup";
 import { Link } from "react-router-dom";
 export const Signin = () => {
   console.log("stuck");

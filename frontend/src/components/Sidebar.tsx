@@ -1,7 +1,4 @@
 import { AllContentsIcon } from "./icons/AllContentIcon";
-import { DocumentsIcon } from "./icons/DocumentsIcon";
-import { GithubIcon } from "./icons/GithubIcon";
-import { InstagramIcon } from "./icons/InstagramIcon";
 import { Logo } from "./icons/Logo";
 import { TwitterIcon } from "./icons/TwitterIcon";
 import { YoutubeIcon } from "./icons/YoutubeIcon";
