@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@types/cors": "^2.8.19",
+    "@vendia/serverless-express": "^4.12.6",
     "bcrypt": "^6.0.0",
     "build": "^0.1.4",
     "cors": "^2.8.5",
