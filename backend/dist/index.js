@@ -16,7 +16,10 @@ const PORT = config.PORT;
 console.log(PORT);
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: "https://alzheimer-frontend.vercel.app",
+    credentials: true,
+}));
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/content", contentRouter);
 app.use("/api/v1/brain", brainRouter);
