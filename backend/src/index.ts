@@ -14,15 +14,28 @@ import cors from "cors";
 const DB_URL = config.DB_URL;
 
 const PORT = config.PORT;
+const allowedOrigins = ["https://alzheimer-client.vercel.app"];
 console.log(PORT);
 const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://alzheimer-frontend.vercel.app",
+    origin: allowedOrigins,
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+app.options(
+  "*",
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/content", contentRouter);
 app.use("/api/v1/brain", brainRouter);
