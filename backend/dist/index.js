@@ -16,18 +16,20 @@ const PORT = config.PORT;
 console.log(PORT);
 const app = express();
 app.use(express.json());
-app.use(cors({
-    origin: "https://alzheimer-frontend.vercel.app",
+app.use(
+  cors({
+    origin: "https://alzheimer-client.vercel.app",
     credentials: true,
-}));
+  })
+);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/content", contentRouter);
 app.use("/api/v1/brain", brainRouter);
 // app.post("/api/v1/brain/share", async (req, res) => {});
 // app.get("/api/v1/brain/:shareLink", async (req, res) => {});
 async function startThedatabaseIfOnlyWhenItComes() {
-    await mongoose.connect(DB_URL);
-    console.log("Database is started");
-    app.listen(PORT);
+  await mongoose.connect(DB_URL);
+  console.log("Database is started");
+  app.listen(PORT);
 }
 startThedatabaseIfOnlyWhenItComes();
