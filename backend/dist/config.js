@@ -10,6 +10,5 @@ export function getConfig() {
         DB_URL: getEnvVar("DB_URL"),
         JWT_USER_PASSWORD: getEnvVar("JWT_USER_PASSWORD"),
         PORT: getEnvVar("PORT"),
-        FRONTEND_URL: getEnvVar("FRONTEND_URL"),
     };
 }
