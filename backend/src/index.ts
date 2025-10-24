@@ -15,11 +15,18 @@ import cors from "cors";
 const DB_URL = config.DB_URL;
 
 const PORT = config.PORT;
-
+const FRONTEND_URL = config.PORT;
 console.log(PORT);
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+//configure cors
+const corsOptions = {
+  origin: FRONTEND_URL,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/content", contentRouter);
 app.use("/api/v1/brain", brainRouter);
