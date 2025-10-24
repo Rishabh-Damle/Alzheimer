@@ -1,9 +1,11 @@
 //override the types of the express request object avoid the use of @ts-ignore
+import dotenv from "dotenv";
+dotenv.config();
 import jwt from "jsonwebtoken";
 import type { Request, Response, NextFunction } from "express";
-import { getConfig } from "../config.js";
-const config = getConfig();
-const JWT_USER_PASSWORD = config.JWT_USER_PASSWORD;
+
+import { JWT_SECRET } from "../config.js";
+
 interface myJwtPayLoad {
   userId: string;
 }
@@ -14,7 +16,7 @@ export function userAuth(req: Request, res: Response, next: NextFunction) {
     return;
   }
   try {
-    const decodedData = jwt.verify(token, JWT_USER_PASSWORD) as myJwtPayLoad;
+    const decodedData = jwt.verify(token, JWT_SECRET) as myJwtPayLoad;
     req.userId = decodedData.userId;
     console.log(decodedData);
     next();

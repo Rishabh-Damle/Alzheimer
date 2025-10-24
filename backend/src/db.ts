@@ -1,10 +1,9 @@
 import dotenv from "dotenv";
 dotenv.config();
 import mongoose, { Types } from "mongoose";
-import { getConfig } from "./config.js";
-const config = getConfig();
-console.log(config.DB_URL);
-const DB_URL = config.DB_URL;
+
+import { DB_URL } from "./config.js";
+
 mongoose.connect(DB_URL);
 import { model, Schema } from "mongoose";
 import { required } from "zod/mini";

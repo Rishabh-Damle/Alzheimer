@@ -6,15 +6,8 @@ import mongoose from "mongoose";
 import { userRouter } from "./routes/user.js";
 import { contentRouter } from "./routes/content.js";
 import { brainRouter } from "./routes/brain.js";
-import { getConfig } from "./config.js";
-const config = getConfig();
-console.log("DB_URL from config:", config.DB_URL);
-console.log("PORT from config:", config.PORT);
+import { FRONTEND_URL, DB_URL, PORT } from "./config.js";
 import cors from "cors";
-const DB_URL = config.DB_URL;
-const PORT = config.PORT;
-const FRONTEND_URL = config.PORT;
-console.log(PORT);
 const app = express();
 app.use(express.json());
 //configure cors

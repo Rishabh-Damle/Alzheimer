@@ -1,15 +1,6 @@
-function getEnvVar(key) {
-    const value = process.env[key];
-    if (!value) {
-        throw new Error(`Missing required environment variable: ${key}`);
-    }
-    return value;
-}
-export function getConfig() {
-    return {
-        DB_URL: getEnvVar("DB_URL"),
-        JWT_USER_PASSWORD: getEnvVar("JWT_USER_PASSWORD"),
-        PORT: getEnvVar("PORT"),
-        FRONTEND_URL: getEnvVar("FRONTEND_URL"),
-    };
-}
+import dotenv from "dotenv";
+dotenv.config();
+export const DB_URL = process.env.DB_URL;
+export const JWT_SECRET = process.env.JWT_SECRET;
+export const FRONTEND_URL = process.env.FRONTEND_URL;
+export const PORT = process.env.PORT;

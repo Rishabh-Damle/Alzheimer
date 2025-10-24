@@ -1,11 +1,11 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import { Router } from "express";
 import { UserModel } from "../db.js";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
-import { getConfig } from "../config.js";
-const config = getConfig();
-const JWT_USER_PASSWORD = config.JWT_USER_PASSWORD;
+import { JWT_SECRET } from "../config.js";
 import bcrypt from "bcrypt";
 export const userRouter = Router();
 userRouter.use(express.json());
@@ -72,7 +72,7 @@ userRouter.post("/signin", async (req, res) => {
         res.status(404).json({ Error: `you have a wrong password` });
         return;
     }
-    const token = jwt.sign({ userId: existingUser._id.toString() }, JWT_USER_PASSWORD);
+    const token = jwt.sign({ userId: existingUser._id.toString() }, JWT_SECRET);
     console.log("Backend token " + token);
     res.status(200).json({ Token: token });
 });
