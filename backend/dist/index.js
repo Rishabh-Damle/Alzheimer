@@ -25,14 +25,14 @@ const config_js_1 = require("./config.js");
 const middleware_js_1 = require("./middleware.js");
 const utils_js_1 = require("./utils.js");
 const app = (0, express_1.default)();
-app.use(express_1.default.json());
 //configure cors
 const corsOptions = {
-    origin: process.env.FRONTEND_URL || "*",
+    origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use((0, cors_1.default)(corsOptions));
+app.use(express_1.default.json());
 app.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //add zod validations,add password hashing,use try catch and etc more great things
     const { username, password } = req.body;
