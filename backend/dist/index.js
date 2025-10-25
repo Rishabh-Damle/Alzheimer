@@ -17,19 +17,18 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const express_1 = __importDefault(require("express"));
 const db_js_1 = require("./db.js");
-const config_js_1 = require("./config.js");
 const cors_1 = __importDefault(require("cors"));
 const zod_1 = __importDefault(require("zod"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const config_js_2 = require("./config.js");
+const config_js_1 = require("./config.js");
 const middleware_js_1 = require("./middleware.js");
 const utils_js_1 = require("./utils.js");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 //configure cors
 const corsOptions = {
-    origin: config_js_1.FRONTEND_URL,
+    origin: process.env.FRONTEND_URL || "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
 };
@@ -59,6 +58,7 @@ app.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             Message: `Bad format to enter please make sure you are using right format`,
             Error: parsedDataWithSuccsess.error,
         });
+        return;
     }
     const hasshedPassword = yield bcrypt_1.default.hash(password, 10);
     try {
@@ -79,7 +79,7 @@ app.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 app.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
     if (!username || !password) {
-        res.status(404).json({
+        res.status(400).json({
             Error: `please add all the credentials sir that all are neccsesarry`,
         });
         return;
@@ -97,7 +97,7 @@ app.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(404).json({ Error: `you have a wrong password` });
         return;
     }
-    const token = jsonwebtoken_1.default.sign({ userId: existingUser._id.toString() }, config_js_2.JWT_SECRET);
+    const token = jsonwebtoken_1.default.sign({ userId: existingUser._id.toString() }, config_js_1.JWT_SECRET);
     console.log("Backend token " + token);
     res.status(200).json({ Token: token });
 }));

@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import { UserModel, ContentModel, LinkModel } from "./db.js";
-import { FRONTEND_URL, DB_URL, PORT } from "./config.js";
 import cors from "cors";
 import z from "zod";
 import bcrypt from "bcrypt";
@@ -17,10 +16,11 @@ app.use(express.json());
 
 //configure cors
 const corsOptions = {
-  origin: FRONTEND_URL,
+  origin: process.env.FRONTEND_URL || "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
+
 app.use(cors(corsOptions));
 app.post("/signup", async (req, res) => {
   //add zod validations,add password hashing,use try catch and etc more great things
@@ -49,6 +49,7 @@ app.post("/signup", async (req, res) => {
       Message: `Bad format to enter please make sure you are using right format`,
       Error: parsedDataWithSuccsess.error,
     });
+    return;
   }
   const hasshedPassword = await bcrypt.hash(password, 10);
   try {
@@ -69,7 +70,7 @@ app.post("/signup", async (req, res) => {
 app.post("/signin", async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
-    res.status(404).json({
+    res.status(400).json({
       Error: `please add all the credentials sir that all are neccsesarry`,
     });
     return;

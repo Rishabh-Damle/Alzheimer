@@ -12,7 +12,7 @@ interface myJwtPayLoad {
 export function userAuth(req: Request, res: Response, next: NextFunction) {
   const token = req.headers["authorization"];
   if (!token) {
-    res.status(404).json({ Error: `You are not loged-in` });
+    res.status(401).json({ Error: `You are not loged-in` });
     return;
   }
   try {

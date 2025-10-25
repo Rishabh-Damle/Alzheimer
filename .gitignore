@@ -25,3 +25,4 @@ backend/build/
 
 # Coverage or testing outputs
 coverage/
+.vercel
