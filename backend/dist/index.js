@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -33,7 +24,7 @@ const corsOptions = {
 };
 app.use((0, cors_1.default)(corsOptions));
 app.use(express_1.default.json());
-app.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/signup", async (req, res) => {
     //add zod validations,add password hashing,use try catch and etc more great things
     const { username, password } = req.body;
     // if (!username || !password) {
@@ -60,9 +51,9 @@ app.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
         return;
     }
-    const hasshedPassword = yield bcrypt_1.default.hash(password, 10);
+    const hasshedPassword = await bcrypt_1.default.hash(password, 10);
     try {
-        yield db_js_1.UserModel.create({
+        await db_js_1.UserModel.create({
             username: username,
             password: hasshedPassword,
         });
@@ -75,8 +66,8 @@ app.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             message: "User already exists",
         });
     }
-}));
-app.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+app.post("/signin", async (req, res) => {
     const { username, password } = req.body;
     if (!username || !password) {
         res.status(400).json({
@@ -84,7 +75,7 @@ app.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
         return;
     }
-    const existingUser = yield db_js_1.UserModel.findOne({
+    const existingUser = await db_js_1.UserModel.findOne({
         username,
     });
     if (!existingUser || !existingUser.password) {
@@ -92,7 +83,7 @@ app.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             .status(404)
             .json({ Error: "You are not signed up or password is missing" });
     }
-    const passwordmatch = yield bcrypt_1.default.compare(password, existingUser.password);
+    const passwordmatch = await bcrypt_1.default.compare(password, existingUser.password);
     if (!passwordmatch) {
         res.status(404).json({ Error: `you have a wrong password` });
         return;
@@ -100,8 +91,8 @@ app.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const token = jsonwebtoken_1.default.sign({ userId: existingUser._id.toString() }, config_js_1.JWT_SECRET);
     console.log("Backend token " + token);
     res.status(200).json({ Token: token });
-}));
-app.post("/createYourContent", middleware_js_1.userAuth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+app.post("/createYourContent", middleware_js_1.userAuth, async (req, res) => {
     try {
         const userId = req.userId;
         const { link, type, title } = req.body;
@@ -110,7 +101,7 @@ app.post("/createYourContent", middleware_js_1.userAuth, (req, res) => __awaiter
             res.status(400).json({ message: "All fields are required" });
             return;
         }
-        const content = yield db_js_1.ContentModel.create({
+        const content = await db_js_1.ContentModel.create({
             link: link,
             type: type,
             title: title,
@@ -129,10 +120,10 @@ app.post("/createYourContent", middleware_js_1.userAuth, (req, res) => __awaiter
         console.log("Err(catch): something went wrong", error);
         return;
     }
-}));
-app.get("/getYourContent", middleware_js_1.userAuth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+app.get("/getYourContent", middleware_js_1.userAuth, async (req, res) => {
     const userId = req.userId;
-    const content = yield db_js_1.ContentModel.find({
+    const content = await db_js_1.ContentModel.find({
         userId: userId,
     }).populate({
         path: "userId",
@@ -146,10 +137,10 @@ app.get("/getYourContent", middleware_js_1.userAuth, (req, res) => __awaiter(voi
     }
     res.status(200).json({ Message: "Take your content", content });
     console.log(content);
-}));
-app.delete("/deleteYourContent", middleware_js_1.userAuth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+app.delete("/deleteYourContent", middleware_js_1.userAuth, async (req, res) => {
     const contentId = req.body.contentId;
-    yield db_js_1.ContentModel.deleteMany({
+    await db_js_1.ContentModel.deleteMany({
         _id: contentId,
         //@ts-ignore
         userId: req.userId,
@@ -157,12 +148,12 @@ app.delete("/deleteYourContent", middleware_js_1.userAuth, (req, res) => __await
     res.json({
         message: "Content deleted",
     });
-}));
-app.post("/share", middleware_js_1.userAuth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+app.post("/share", middleware_js_1.userAuth, async (req, res) => {
     const { share } = req.body;
     if (share) {
         //check whether the sharable link already exists or not
-        const existingLink = yield db_js_1.LinkModel.findOne({
+        const existingLink = await db_js_1.LinkModel.findOne({
             userId: req.userId,
         });
         if (existingLink) {
@@ -173,7 +164,7 @@ app.post("/share", middleware_js_1.userAuth, (req, res) => __awaiter(void 0, voi
         }
         const hash = (0, utils_js_1.random)(8);
         console.log("Generated hash:", hash);
-        yield db_js_1.LinkModel.create({
+        await db_js_1.LinkModel.create({
             userId: req.userId,
             hash: hash,
         });
@@ -183,7 +174,7 @@ app.post("/share", middleware_js_1.userAuth, (req, res) => __awaiter(void 0, voi
         });
     }
     else {
-        yield db_js_1.LinkModel.deleteOne({
+        await db_js_1.LinkModel.deleteOne({
             userId: req.userId,
         });
         res.status(200).json({
@@ -191,10 +182,10 @@ app.post("/share", middleware_js_1.userAuth, (req, res) => __awaiter(void 0, voi
         });
         return;
     }
-}));
-app.get("/share/:shareLink", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+app.get("/share/:shareLink", async (req, res) => {
     const hash = req.params.shareLink;
-    const link = yield db_js_1.LinkModel.findOne({
+    const link = await db_js_1.LinkModel.findOne({
         hash: hash,
     });
     if (!link) {
@@ -203,10 +194,10 @@ app.get("/share/:shareLink", (req, res) => __awaiter(void 0, void 0, void 0, fun
         });
         return;
     }
-    const content = yield db_js_1.ContentModel.find({
+    const content = await db_js_1.ContentModel.find({
         userId: link.userId,
     });
-    const user = yield db_js_1.UserModel.findOne({
+    const user = await db_js_1.UserModel.findOne({
         _id: link.userId,
     });
     if (!user) {
@@ -217,8 +208,8 @@ app.get("/share/:shareLink", (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
     res.status(200).json({
         message: "Data fetched successfully",
-        username: user === null || user === void 0 ? void 0 : user.username,
+        username: user?.username,
         content: content,
     });
-}));
+});
 exports.default = app;

@@ -13,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.156",
     "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.4",
     "@types/jsonwebtoken": "^9.0.10",
