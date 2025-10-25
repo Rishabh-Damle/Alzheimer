@@ -25,7 +25,7 @@ export function Dashboard() {
   useEffect(() => {
     async function fetchShareStatus() {
       try {
-        const response = await axios.get(`${BACKEND_URL}/api/v1/brain/share`, {
+        const response = await axios.get(`${BACKEND_URL}/api/v1/share`, {
           headers: { Authorization: localStorage.getItem("Token") },
         });
         if ((response as any).data.hash) {
@@ -44,7 +44,7 @@ export function Dashboard() {
     setShareLoading(true);
     try {
       const response = await axios.post(
-        `${BACKEND_URL}/api/v1/brain/share`,
+        `${BACKEND_URL}/api/v1/share`,
         {
           share: true,
         },
@@ -60,7 +60,7 @@ export function Dashboard() {
     setShareLoading(true);
     try {
       await axios.post(
-        `${BACKEND_URL}/api/v1/brain/share`,
+        `${BACKEND_URL}/api/v1/share`,
         { share: false },
         {
           headers: { Authorization: localStorage.getItem("Token") },

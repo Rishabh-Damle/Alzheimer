@@ -16,7 +16,7 @@ export function Share() {
       setError("");
       try {
         const response = await axios.get(
-          `${BACKEND_URL}/api/v1/brain/share/${shareId}`
+          `${BACKEND_URL}/api/v1/share/${shareId}`
         );
         setContents((response as any).data.content || []);
         setUsername((response as any).data.username || "");

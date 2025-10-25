@@ -14,12 +14,9 @@ export const useContent = () => {
 
   const refresh = async () => {
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/v1/content/getYourContent`,
-        {
-          headers: { Authorization: localStorage.getItem("Token") || "" },
-        }
-      );
+      const response = await axios.get(`${BACKEND_URL}/api/v1/getYourContent`, {
+        headers: { Authorization: localStorage.getItem("Token") || "" },
+      });
       setContents(response.data.content);
     } catch (err) {
       console.error("Failed to fetch content:", err);
@@ -28,7 +25,7 @@ export const useContent = () => {
 
   const deleteContent = async (id: string) => {
     try {
-      await axios.delete(`${BACKEND_URL}/api/v1/content/deleteYourContent`, {
+      await axios.delete(`${BACKEND_URL}/api/v1/deleteYourContent`, {
         headers: { Authorization: localStorage.getItem("Token") || "" },
         data: { contentId: id },
       });
