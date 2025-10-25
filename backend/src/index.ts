@@ -23,7 +23,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.post("/signup", async (req, res) => {
+app.post("/api/v1/signup", async (req, res) => {
   //add zod validations,add password hashing,use try catch and etc more great things
   const { username, password } = req.body;
 
@@ -68,7 +68,7 @@ app.post("/signup", async (req, res) => {
     });
   }
 });
-app.post("/signin", async (req, res) => {
+app.post("/api/v1/signin", async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
     res.status(400).json({
@@ -96,7 +96,7 @@ app.post("/signin", async (req, res) => {
   console.log("Backend token " + token);
   res.status(200).json({ Token: token });
 });
-app.post("/createYourContent", userAuth, async (req, res) => {
+app.post("/api/v1/createYourContent", userAuth, async (req, res) => {
   try {
     const userId = req.userId;
     const { link, type, title } = req.body;
@@ -128,7 +128,7 @@ app.post("/createYourContent", userAuth, async (req, res) => {
     return;
   }
 });
-app.get("/getYourContent", userAuth, async (req, res) => {
+app.get("/api/v1/getYourContent", userAuth, async (req, res) => {
   const userId = req.userId;
   const content = await ContentModel.find({
     userId: userId,
@@ -146,7 +146,7 @@ app.get("/getYourContent", userAuth, async (req, res) => {
   res.status(200).json({ Message: "Take your content", content });
   console.log(content);
 });
-app.delete("/deleteYourContent", userAuth, async (req, res) => {
+app.delete("/api/v1/deleteYourContent", userAuth, async (req, res) => {
   const contentId = req.body.contentId;
 
   await ContentModel.deleteMany({
@@ -159,7 +159,7 @@ app.delete("/deleteYourContent", userAuth, async (req, res) => {
     message: "Content deleted",
   });
 });
-app.post("/share", userAuth, async (req, res) => {
+app.post("/api/v1/share", userAuth, async (req, res) => {
   const { share } = req.body;
   if (share) {
     //check whether the sharable link already exists or not
@@ -192,7 +192,7 @@ app.post("/share", userAuth, async (req, res) => {
     return;
   }
 });
-app.get("/share/:shareLink", async (req, res) => {
+app.get("/api/v1/share/:shareLink", async (req, res) => {
   const hash = req.params.shareLink;
   const link = await LinkModel.findOne({
     hash: hash,
