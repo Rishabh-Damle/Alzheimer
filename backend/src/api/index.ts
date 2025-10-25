@@ -1,5 +1,4 @@
-import { configure } from "@vendia/serverless-express";
-import app from "../index.js";
+import serverlessExpress from "@vendia/serverless-express";
+import app from "../index";
 
-export const handler = configure({ app });
-export default handler;
+export default serverlessExpress({ app });
