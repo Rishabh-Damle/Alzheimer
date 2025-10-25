@@ -1,24 +1,3 @@
 {
-  "routes": [
-    {
-      "src": "/",
-      "dest": "/"
-    },
-    {
-      "src": "/signup",
-      "dest": "/"
-    },
-    {
-      "src": "/sigin",
-      "dest": "/"
-    },
-    {
-      "src": "/dashboard",
-      "dest": "/"
-    },
-    {
-      "src": "/share/:shareId",
-      "dest": "/"
-    }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
