@@ -12,16 +12,16 @@ import { userAuth } from "./middleware.js";
 import { random } from "./utils.js";
 
 const app = express();
-app.use(express.json());
 
 //configure cors
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "*",
+  origin: process.env.FRONTEND_URL,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 app.use(cors(corsOptions));
+app.use(express.json());
 app.post("/signup", async (req, res) => {
   //add zod validations,add password hashing,use try catch and etc more great things
   const { username, password } = req.body;
