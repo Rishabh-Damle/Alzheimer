@@ -15,16 +15,17 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_js_1 = require("./config.js");
 const middleware_js_1 = require("./middleware.js");
 const utils_js_1 = require("./utils.js");
+const config_js_2 = require("./config.js");
 const app = (0, express_1.default)();
 //configure cors
 const corsOptions = {
-    origin: process.env.FRONTEND_URL,
+    origin: config_js_2.FRONTEND_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use((0, cors_1.default)(corsOptions));
 app.use(express_1.default.json());
-app.post("/signup", async (req, res) => {
+app.post("/api/v1/signup", async (req, res) => {
     //add zod validations,add password hashing,use try catch and etc more great things
     const { username, password } = req.body;
     // if (!username || !password) {
@@ -67,7 +68,7 @@ app.post("/signup", async (req, res) => {
         });
     }
 });
-app.post("/signin", async (req, res) => {
+app.post("/api/v1/signin", async (req, res) => {
     const { username, password } = req.body;
     if (!username || !password) {
         res.status(400).json({
@@ -92,7 +93,7 @@ app.post("/signin", async (req, res) => {
     console.log("Backend token " + token);
     res.status(200).json({ Token: token });
 });
-app.post("/createYourContent", middleware_js_1.userAuth, async (req, res) => {
+app.post("/api/v1/createYourContent", middleware_js_1.userAuth, async (req, res) => {
     try {
         const userId = req.userId;
         const { link, type, title } = req.body;
@@ -121,7 +122,7 @@ app.post("/createYourContent", middleware_js_1.userAuth, async (req, res) => {
         return;
     }
 });
-app.get("/getYourContent", middleware_js_1.userAuth, async (req, res) => {
+app.get("/api/v1/getYourContent", middleware_js_1.userAuth, async (req, res) => {
     const userId = req.userId;
     const content = await db_js_1.ContentModel.find({
         userId: userId,
@@ -138,7 +139,7 @@ app.get("/getYourContent", middleware_js_1.userAuth, async (req, res) => {
     res.status(200).json({ Message: "Take your content", content });
     console.log(content);
 });
-app.delete("/deleteYourContent", middleware_js_1.userAuth, async (req, res) => {
+app.delete("/api/v1/deleteYourContent", middleware_js_1.userAuth, async (req, res) => {
     const contentId = req.body.contentId;
     await db_js_1.ContentModel.deleteMany({
         _id: contentId,
@@ -149,7 +150,7 @@ app.delete("/deleteYourContent", middleware_js_1.userAuth, async (req, res) => {
         message: "Content deleted",
     });
 });
-app.post("/share", middleware_js_1.userAuth, async (req, res) => {
+app.post("/api/v1/share", middleware_js_1.userAuth, async (req, res) => {
     const { share } = req.body;
     if (share) {
         //check whether the sharable link already exists or not
@@ -183,7 +184,7 @@ app.post("/share", middleware_js_1.userAuth, async (req, res) => {
         return;
     }
 });
-app.get("/share/:shareLink", async (req, res) => {
+app.get("/api/v1/share/:shareLink", async (req, res) => {
     const hash = req.params.shareLink;
     const link = await db_js_1.LinkModel.findOne({
         hash: hash,
