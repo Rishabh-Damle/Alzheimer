@@ -10,12 +10,13 @@ import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "./config.js";
 import { userAuth } from "./middleware.js";
 import { random } from "./utils.js";
+import { FRONTEND_URL } from "./config.js";
 
 const app = express();
 
 //configure cors
 const corsOptions = {
-  origin: process.env.FRONTEND_URL,
+  origin: FRONTEND_URL,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
