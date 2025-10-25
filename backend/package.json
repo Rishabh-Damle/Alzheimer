@@ -2,7 +2,6 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -b",
@@ -15,8 +14,9 @@
   "description": "",
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
-    "@types/express": "^5.0.3",
+    "@types/express": "^5.0.4",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.9.1",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
@@ -28,10 +28,10 @@
     "build": "^0.1.4",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
-    "dotenv": "^17.2.1",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.18.0",
+    "mongoose": "^8.19.2",
     "npm": "^11.6.2",
     "run": "^1.5.0",
     "start": "^5.1.0",
