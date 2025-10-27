@@ -19,7 +19,7 @@ export const AddContentModel = ({ open, onClose }: EventType) => {
     const title = titleRef.current?.value;
     const link = linkRef.current?.value;
     const response = await axios.post(
-      `${BACKEND_URL}/api/v1/content/createYourContent`,
+      `${BACKEND_URL}/api/v1/createYourContent`,
       {
         link,
         title,
