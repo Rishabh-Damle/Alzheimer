@@ -24,6 +24,7 @@ const corsOptions = {
     allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use((0, cors_1.default)(corsOptions));
+app.options("*", (0, cors_1.default)(corsOptions));
 app.use(express_1.default.json());
 app.post("/api/v1/signup", async (req, res) => {
     //add zod validations,add password hashing,use try catch and etc more great things
