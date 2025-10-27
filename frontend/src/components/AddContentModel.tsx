@@ -28,8 +28,8 @@ export const AddContentModel = ({ open, onClose }: EventType) => {
       {
         headers: {
           Authorization: localStorage.getItem("Token"),
-          timeout: 5000,
         },
+        timeout: 5000,
       }
     );
 
