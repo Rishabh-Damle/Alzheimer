@@ -22,6 +22,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
+
 app.use(express.json());
 app.post("/api/v1/signup", async (req, res) => {
   //add zod validations,add password hashing,use try catch and etc more great things
