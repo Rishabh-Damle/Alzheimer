@@ -47,6 +47,24 @@ app.use((req, res, next) => {
   }
   next();
 });
+// Explicit OPTIONS handler compatible with Express 5's path parser
+app.options(/.*/, (req, res) => {
+  const origin = req.headers.origin as string | undefined;
+  if (origin) {
+    res.header("Access-Control-Allow-Origin", origin);
+    res.header("Vary", "Origin");
+  }
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET,POST,PUT,DELETE,OPTIONS,PATCH"
+  );
+  const requestHeaders =
+    (req.headers["access-control-request-headers"] as string | undefined) ??
+    "Content-Type, Authorization, Accept, X-Requested-With";
+  res.header("Access-Control-Allow-Headers", requestHeaders);
+  res.header("Access-Control-Max-Age", "86400");
+  res.sendStatus(204);
+});
 // Generic preflight handler without path patterns to avoid path-to-regexp issues
 app.use((req, res, next) => {
   if (req.method === "OPTIONS") {
