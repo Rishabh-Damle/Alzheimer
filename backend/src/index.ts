@@ -23,7 +23,8 @@ const allowedOrigins = [
 ].filter(Boolean) as string[];
 
 const corsOptions: cors.CorsOptions = {
-  origin: allowedOrigins as string[],
+  // Reflect request origin dynamically to simplify CORS in serverless
+  origin: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
   allowedHeaders: [
     "Content-Type",
@@ -37,6 +38,15 @@ const corsOptions: cors.CorsOptions = {
 };
 
 app.use(cors(corsOptions));
+// Ensure CORS headers exist on all responses when origin is allowed
+app.use((req, res, next) => {
+  const origin = req.headers.origin as string | undefined;
+  if (origin) {
+    res.header("Access-Control-Allow-Origin", origin);
+    res.header("Vary", "Origin");
+  }
+  next();
+});
 // Generic preflight handler without path patterns to avoid path-to-regexp issues
 app.use((req, res, next) => {
   if (req.method === "OPTIONS") {
