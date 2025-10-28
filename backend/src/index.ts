@@ -59,6 +59,10 @@ app.use(express.json());
 app.get("/", (_req, res) => {
   res.status(200).json({ ok: true });
 });
+// ignore favicon requests to avoid noise/crashes
+app.get(["/favicon.ico", "/favicon.png"], (_req, res) => {
+  res.sendStatus(204);
+});
 app.post("/api/v1/signup", async (req, res) => {
   //add zod validations,add password hashing,use try catch and etc more great things
   const { username, password } = req.body;
@@ -262,3 +266,15 @@ app.get("/api/v1/share/:shareLink", async (req, res) => {
 });
 
 export default app;
+// central error handler to prevent crashes
+app.use(
+  (
+    err: unknown,
+    _req: express.Request,
+    res: express.Response,
+    _next: express.NextFunction
+  ) => {
+    console.error("Unhandled error:", err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+);
