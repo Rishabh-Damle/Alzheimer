@@ -24,14 +24,10 @@ export const Signup = () => {
       const params = new URLSearchParams();
       if (username) params.append("username", username);
       if (password) params.append("password", password);
-      const response = await axios.post(
-        `${BACKEND_URL}/api/v1/signup`,
-        params,
-        {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          withCredentials: false,
-        }
-      );
+      const response = await axios.post(`${BACKEND_URL}/v1/signup`, params, {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        withCredentials: false,
+      });
       console.log(response.data);
       alert("You have signed up");
       navigate("/signin");
