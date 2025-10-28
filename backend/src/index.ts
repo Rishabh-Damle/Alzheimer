@@ -63,7 +63,7 @@ app.options(/.*/, (req, res) => {
     "Content-Type, Authorization, Accept, X-Requested-With";
   res.header("Access-Control-Allow-Headers", requestHeaders);
   res.header("Access-Control-Max-Age", "86400");
-  res.sendStatus(204);
+  res.status(200).end();
 });
 // Generic preflight handler without path patterns to avoid path-to-regexp issues
 app.use((req, res, next) => {
@@ -84,7 +84,8 @@ app.use((req, res, next) => {
       "Access-Control-Allow-Headers",
       "Content-Type, Authorization, Accept, X-Requested-With"
     );
-    return res.sendStatus(204);
+    res.status(200).end();
+    return;
   }
   next();
 });
