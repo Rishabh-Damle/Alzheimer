@@ -10,7 +10,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const config_js_1 = require("./config.js");
 mongoose_1.default.connect(config_js_1.DB_URL);
 const mongoose_2 = require("mongoose");
-const zod_1 = require("zod");
+// Remove accidental zod imports; use Mongoose types instead
 //user schema
 const UserSchmea = new mongoose_2.Schema({
     username: { type: String, unique: true },
@@ -23,7 +23,7 @@ const TagSchema = new mongoose_2.Schema({
 });
 exports.TagModel = (0, mongoose_2.model)("Tag", TagSchema);
 const LinkSchema = new mongoose_2.Schema({
-    hash: { type: zod_1.string, required: true },
+    hash: { type: String, required: true },
     userId: {
         type: mongoose_1.default.Types.ObjectId,
         ref: "User",
@@ -36,7 +36,7 @@ exports.LinkModel = (0, mongoose_2.model)("Link", LinkSchema);
 const contentTypes = ["Youtube", "Twitter"];
 const ContentSchema = new mongoose_2.Schema({
     link: { type: String, ref: "Link", required: true },
-    type: { type: String, require: true },
+    type: { type: String, required: true, enum: contentTypes },
     title: { type: String, required: true },
     tags: [{ type: mongoose_1.default.Types.ObjectId, ref: "Tag" }],
     userId: {

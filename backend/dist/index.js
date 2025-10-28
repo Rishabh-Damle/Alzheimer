@@ -24,7 +24,15 @@ const corsOptions = {
     allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use((0, cors_1.default)(corsOptions));
-app.options("*", (0, cors_1.default)(corsOptions));
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", config_js_2.FRONTEND_URL);
+    res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS,PATCH");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    if (req.method === "OPTIONS") {
+        return res.sendStatus(204);
+    }
+    next();
+});
 app.use(express_1.default.json());
 app.post("/api/v1/signup", async (req, res) => {
     //add zod validations,add password hashing,use try catch and etc more great things

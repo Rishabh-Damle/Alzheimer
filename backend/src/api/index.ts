@@ -1,5 +1,4 @@
-import serverlessExpress from "@vendia/serverless-express";
-
 import app from "../index";
 
-export default serverlessExpress({ app });
+// Export the Express app directly; Vercel's Node runtime will handle it.
+export default app;

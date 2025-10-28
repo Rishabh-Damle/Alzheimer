@@ -6,8 +6,7 @@ import { DB_URL } from "./config.js";
 
 mongoose.connect(DB_URL);
 import { model, Schema } from "mongoose";
-import { required } from "zod/mini";
-import { string } from "zod";
+// Remove accidental zod imports; use Mongoose types instead
 
 //user schema
 const UserSchmea = new Schema({
@@ -23,7 +22,7 @@ const TagSchema = new Schema({
 export const TagModel = model("Tag", TagSchema);
 
 const LinkSchema = new Schema({
-  hash: { type: string, required: true },
+  hash: { type: String, required: true },
   userId: {
     type: mongoose.Types.ObjectId,
     ref: "User",
@@ -36,7 +35,7 @@ export const LinkModel = model("Link", LinkSchema);
 const contentTypes = ["Youtube", "Twitter"];
 const ContentSchema = new Schema({
   link: { type: String, ref: "Link", required: true },
-  type: { type: String, require: true },
+  type: { type: String, required: true, enum: contentTypes },
   title: { type: String, required: true },
   tags: [{ type: mongoose.Types.ObjectId, ref: "Tag" }],
   userId: {
