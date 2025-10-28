@@ -20,15 +20,13 @@ export const AddContentModel = ({ open, onClose }: EventType) => {
     const link = linkRef.current?.value;
     const response = await axios.post(
       `${BACKEND_URL}/api/v1/createYourContent`,
-      {
-        link,
-        title,
-        type,
-      },
+      { link, title, type },
       {
         headers: {
-          Authorization: localStorage.getItem("Token"),
+          Authorization: localStorage.getItem("Token") || "",
+          "Content-Type": "application/json",
         },
+        withCredentials: false,
         timeout: 5000,
       }
     );

@@ -20,10 +20,17 @@ export const Signin = () => {
     console.log(username);
     const password = passwordRef.current?.value;
     try {
-      const response = await axios.post(`${BACKEND_URL}/api/v1/signin`, {
-        username,
-        password,
-      });
+      const params = new URLSearchParams();
+      if (username) params.append("username", username);
+      if (password) params.append("password", password);
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/signin`,
+        params,
+        {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          withCredentials: false,
+        }
+      );
       localStorage.setItem("Token", response.data.Token);
       //redirect the user to dashboard
       navigate("/dashboard");
