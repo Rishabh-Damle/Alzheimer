@@ -25,7 +25,12 @@ const allowedOrigins = [
 const corsOptions: cors.CorsOptions = {
   origin: allowedOrigins as string[],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-  allowedHeaders: ["Content-Type", "Authorization", "Accept", "X-Requested-With"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "Accept",
+    "X-Requested-With",
+  ],
   optionsSuccessStatus: 204,
   preflightContinue: false,
   credentials: false,
@@ -37,11 +42,20 @@ app.use((req, res, next) => {
   if (req.method === "OPTIONS") {
     const origin = req.headers.origin as string | undefined;
     if (!origin || allowedOrigins.includes(origin)) {
-      res.header("Access-Control-Allow-Origin", origin ?? allowedOrigins[0] ?? "*");
+      res.header(
+        "Access-Control-Allow-Origin",
+        origin ?? allowedOrigins[0] ?? "*"
+      );
     }
     res.header("Vary", "Origin");
-    res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS,PATCH");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept, X-Requested-With");
+    res.header(
+      "Access-Control-Allow-Methods",
+      "GET,POST,PUT,DELETE,OPTIONS,PATCH"
+    );
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization, Accept, X-Requested-With"
+    );
     return res.sendStatus(204);
   }
   next();
