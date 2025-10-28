@@ -22,34 +22,26 @@ const allowedOrigins = [
   "http://localhost:3000",
 ].filter(Boolean) as string[];
 
-const corsOptions = {
-  origin: (
-    origin: string | undefined,
-    callback: (err: Error | null, allow?: boolean) => void
-  ) => {
-    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
-    return callback(new Error("Not allowed by CORS"));
-  },
+const corsOptions: cors.CorsOptions = {
+  origin: allowedOrigins as string[],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: ["Content-Type", "Authorization", "Accept", "X-Requested-With"],
+  optionsSuccessStatus: 204,
+  preflightContinue: false,
+  credentials: false,
 };
 
 app.use(cors(corsOptions));
 // Generic preflight handler without path patterns to avoid path-to-regexp issues
 app.use((req, res, next) => {
   if (req.method === "OPTIONS") {
-    res.header(
-      "Access-Control-Allow-Methods",
-      "GET,POST,PUT,DELETE,OPTIONS,PATCH"
-    );
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
     const origin = req.headers.origin as string | undefined;
     if (!origin || allowedOrigins.includes(origin)) {
-      res.header(
-        "Access-Control-Allow-Origin",
-        origin ?? allowedOrigins[0] ?? "*"
-      );
+      res.header("Access-Control-Allow-Origin", origin ?? allowedOrigins[0] ?? "*");
     }
+    res.header("Vary", "Origin");
+    res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS,PATCH");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept, X-Requested-With");
     return res.sendStatus(204);
   }
   next();
