@@ -35,7 +35,25 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.options("/api/(.*)", cors(corsOptions));
+// Generic preflight handler without path patterns to avoid path-to-regexp issues
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    res.header(
+      "Access-Control-Allow-Methods",
+      "GET,POST,PUT,DELETE,OPTIONS,PATCH"
+    );
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    const origin = req.headers.origin as string | undefined;
+    if (!origin || allowedOrigins.includes(origin)) {
+      res.header(
+        "Access-Control-Allow-Origin",
+        origin ?? allowedOrigins[0] ?? "*"
+      );
+    }
+    return res.sendStatus(204);
+  }
+  next();
+});
 
 app.use(express.json());
 app.get("/", (_req, res) => {
