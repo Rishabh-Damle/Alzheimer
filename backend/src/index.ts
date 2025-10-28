@@ -102,6 +102,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.get("/", (_req, res) => {
   res.status(200).json({ ok: true });
 });
