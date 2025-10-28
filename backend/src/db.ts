@@ -4,7 +4,18 @@ import mongoose, { Types } from "mongoose";
 
 import { DB_URL } from "./config.js";
 
-mongoose.connect(DB_URL);
+if (DB_URL) {
+  mongoose
+    .connect(DB_URL)
+    .then(() => {
+      // connected
+    })
+    .catch((err) => {
+      console.error("Mongo connection error:", err);
+    });
+} else {
+  console.error("DB_URL is not set; skipping Mongo connection");
+}
 import { model, Schema } from "mongoose";
 // Remove accidental zod imports; use Mongoose types instead
 
