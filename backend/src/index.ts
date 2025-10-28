@@ -36,6 +36,9 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+app.get("/", (_req, res) => {
+  res.status(200).json({ ok: true });
+});
 app.post("/api/v1/signup", async (req, res) => {
   //add zod validations,add password hashing,use try catch and etc more great things
   const { username, password } = req.body;
