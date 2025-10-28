@@ -34,7 +34,7 @@ const corsOptions: cors.CorsOptions = {
   ],
   optionsSuccessStatus: 204,
   preflightContinue: false,
-  credentials: false,
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
@@ -44,6 +44,7 @@ app.use((req, res, next) => {
   if (origin) {
     res.header("Access-Control-Allow-Origin", origin);
     res.header("Vary", "Origin");
+    res.header("Access-Control-Allow-Credentials", "true");
   }
   next();
 });
@@ -62,6 +63,7 @@ app.options(/.*/, (req, res) => {
     (req.headers["access-control-request-headers"] as string | undefined) ??
     "Content-Type, Authorization, Accept, X-Requested-With";
   res.header("Access-Control-Allow-Headers", requestHeaders);
+  res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Max-Age", "86400");
   res.status(200).end();
 });
