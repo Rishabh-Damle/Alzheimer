@@ -15,15 +15,6 @@ import { FRONTEND_URL } from "./config.js";
 const app = express();
 
 //configure cors
-// Normalize Vercel API base path so Express routes match whether invoked at / or /api/*
-app.use((req, _res, next) => {
-  if (req.url === "/api" || req.url === "/api/") {
-    req.url = "/";
-  } else if (req.url.startsWith("/api/")) {
-    req.url = req.url.slice(4);
-  }
-  next();
-});
 const allowedOrigins = [
   FRONTEND_URL,
   "https://alzheimer-frontend.vercel.app",
