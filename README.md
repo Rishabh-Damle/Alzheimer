@@ -1,3 +1,44 @@
+# Local Development Setup
+
+## Backend
+
+1. Create `backend/.env` with:
+
+```
+DB_URL=mongodb://localhost:27017/alzheimer
+JWT_SECRET=replace_with_a_strong_secret
+PORT=3000
+FRONTEND_URL=http://localhost:5173
+```
+
+2. Install deps and run:
+
+```
+cd backend
+npm install
+npm run dev
+```
+
+The API will be available at `http://localhost:3000`.
+
+## Frontend
+
+1. Optionally create `frontend/.env`:
+
+```
+VITE_BACKEND_URL=http://localhost:3000
+```
+
+2. Install deps and run:
+
+```
+cd frontend
+npm install
+npm run dev
+```
+
+The app will be available at `http://localhost:5173`.
+
 <h1 align="center">🧠 Alzheimer – Your Second Brain</h1>
 
 <p align="center">
@@ -37,53 +78,28 @@
 
 ## 🚀 Getting Started
 
+1. Clone the repo
+
 ```bash
-# 1. Clone the repo
 git clone https://github.com/rishabhdamle/Alzheimer.git
 cd Alzheimer
-
-# 2. Install dependencies
-npm install
-
-3. Set environment variables
-
-Create a .env file:
-TWITTER_API_KEY=your_twitter_api_key
-YOUTUBE_API_KEY=your_youtube_api_key
-GOOGLE_DOCS_API_KEY=your_google_docs_api_key
-DB_URI=your_database_uri
-
-4. Run the app
-npm run dev
-
-📂 Project Structure
-alzheimer/
-│── src/
-│   ├── components/    # React components
-│   ├── pages/         # Next.js pages
-│   ├── backend/       # API routes & server logic
-│   ├── models/        # Database schemas
-│   └── utils/         # Helper functions
-│── package.json
-│── README.md
-
-🧑‍💻 Future Enhancements
-
-🤖 AI-powered search using embeddings
-
-🏷 Advanced tagging & categorization
-
-📱 Mobile & cross-platform support
-
-🔌 Third-party plugin integrations
-
-🤝 Contributing
-
-Contributions are welcome!
-Open an issue or submit a pull request to collaborate.
-
-📜 License
-
-Licensed under the MIT License
- – free to use & modify.
 ```
+
+2. Backend setup
+
+```bash
+cd backend
+npm install
+# create .env as documented above, then
+npm run dev
+```
+
+3. Frontend setup
+
+```bash
+cd ../frontend
+npm install
+npm run dev
+```
+
+Now visit http://localhost:5173 and the app will talk to http://localhost:3000.
