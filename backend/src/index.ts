@@ -15,6 +15,17 @@ import { FRONTEND_URL } from "./config";
 const app = express();
 
 //configure cors
+// Disable etag/caching so clients always receive fresh JSON
+app.set("etag", false);
+app.use((req, res, next) => {
+  res.header(
+    "Cache-Control",
+    "no-store, no-cache, must-revalidate, proxy-revalidate"
+  );
+  res.header("Pragma", "no-cache");
+  res.header("Expires", "0");
+  next();
+});
 const allowedOrigins = [
   FRONTEND_URL,
   "https://alzheimer-frontend.vercel.app",
@@ -237,38 +248,30 @@ app.delete("/api/v1/deleteYourContent", userAuth, async (req, res) => {
     message: "Content deleted",
   });
 });
+app.get("/api/v1/share", userAuth, async (req, res) => {
+  const existingLink = await LinkModel.findOne({ userId: req.userId });
+  if (!existingLink) {
+    res.status(200).json({ hash: null });
+    return;
+  }
+  res.status(200).json({ hash: existingLink.hash });
+});
+
 app.post("/api/v1/share", userAuth, async (req, res) => {
-  const { share } = req.body;
+  const { share } = req.body as { share?: boolean };
   if (share) {
-    //check whether the sharable link already exists or not
-    const existingLink = await LinkModel.findOne({
-      userId: req.userId,
-    });
+    const existingLink = await LinkModel.findOne({ userId: req.userId });
     if (existingLink) {
-      res.json({
-        hash: existingLink.hash,
-      });
+      res.status(200).json({ hash: existingLink.hash });
       return;
     }
     const hash = random(8);
-    console.log("Generated hash:", hash);
-    await LinkModel.create({
-      userId: req.userId,
-      hash: hash,
-    });
-    res.status(201).json({
-      message: "Your sharable link is successfully created.",
-      link: hash,
-    });
-  } else {
-    await LinkModel.deleteOne({
-      userId: req.userId,
-    });
-    res.status(200).json({
-      message: "Your link delete request was successful.",
-    });
+    await LinkModel.create({ userId: req.userId, hash });
+    res.status(201).json({ hash });
     return;
   }
+  await LinkModel.deleteOne({ userId: req.userId });
+  res.status(200).json({ hash: null });
 });
 app.get("/api/v1/share/:shareLink", async (req, res) => {
   const hash = req.params.shareLink;

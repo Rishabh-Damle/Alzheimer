@@ -26,13 +26,10 @@ export function Dashboard() {
     async function fetchShareStatus() {
       try {
         const response = await axios.get(`${BACKEND_URL}/api/v1/share`, {
-          headers: { Authorization: localStorage.getItem("Token") },
+          headers: { Authorization: localStorage.getItem("Token") || "" },
         });
-        if ((response as any).data.hash) {
-          setShareLink(`${SITE_URL}/share/${(response as any).data.hash}`);
-        } else {
-          setShareLink(null);
-        }
+        const hash = (response as any)?.data?.hash;
+        setShareLink(hash ? `${SITE_URL}/share/${hash}` : null);
       } catch {
         setShareLink(null);
       }
@@ -48,9 +45,19 @@ export function Dashboard() {
         {
           share: true,
         },
-        { headers: { Authorization: localStorage.getItem("Token") } }
+        { headers: { Authorization: localStorage.getItem("Token") || "" } }
       );
-      setShareLink(`${SITE_URL}/share/${(response as any).data.hash}`);
+      const hash =
+        (response as any)?.data?.hash || (response as any)?.data?.link;
+      if (hash) setShareLink(`${SITE_URL}/share/${hash}`);
+      else {
+        // Fallback: re-fetch current status if response shape unexpected
+        const check = await axios.get(`${BACKEND_URL}/api/v1/share`, {
+          headers: { Authorization: localStorage.getItem("Token") || "" },
+        });
+        const currentHash = (check as any)?.data?.hash;
+        setShareLink(currentHash ? `${SITE_URL}/share/${currentHash}` : null);
+      }
     } finally {
       setShareLoading(false);
     }
@@ -62,9 +69,7 @@ export function Dashboard() {
       await axios.post(
         `${BACKEND_URL}/api/v1/share`,
         { share: false },
-        {
-          headers: { Authorization: localStorage.getItem("Token") },
-        }
+        { headers: { Authorization: localStorage.getItem("Token") || "" } }
       );
       setShareLink(null);
     } finally {
