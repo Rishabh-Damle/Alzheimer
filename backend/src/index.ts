@@ -2,15 +2,15 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
-import { UserModel, ContentModel, LinkModel } from "./db.js";
+import { UserModel, ContentModel, LinkModel } from "./db";
 import cors from "cors";
 import z from "zod";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "./config.js";
-import { userAuth } from "./middleware.js";
-import { random } from "./utils.js";
-import { FRONTEND_URL } from "./config.js";
+import { JWT_SECRET } from "./config";
+import { userAuth } from "./middleware";
+import { random } from "./utils";
+import { FRONTEND_URL } from "./config";
 
 const app = express();
 

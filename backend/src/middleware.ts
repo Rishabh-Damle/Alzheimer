@@ -4,7 +4,7 @@ dotenv.config();
 import jwt from "jsonwebtoken";
 import type { Request, Response, NextFunction } from "express";
 
-import { JWT_SECRET } from "./config.js";
+import { JWT_SECRET } from "./config";
 
 interface myJwtPayLoad {
   userId: string;
