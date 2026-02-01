@@ -3,9 +3,8 @@ import dotenv from "dotenv";
 dotenv.config();
 import jwt from "jsonwebtoken";
 import type { Request, Response, NextFunction } from "express";
-
-import { JWT_SECRET } from "./config";
-
+import { JWT_SECRET } from "../config";
+console.log(JWT_SECRET);
 interface myJwtPayLoad {
   userId: string;
 }

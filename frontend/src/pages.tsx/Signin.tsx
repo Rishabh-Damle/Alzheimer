@@ -40,26 +40,35 @@ export const Signin = () => {
     }
   }
   return (
-    <div className="h-screen w-screen bg-gray-200 flex flex-col justify-center ">
-      <div className="text-4xl font-semibold py-9 flex items-center justify-center ">
-        <div className="pr-4 text-purple-600 text-shadow-lg">
-          <Logo></Logo>
+    <div className="min-h-screen w-full flex flex-col justify-center bg-transparent px-4">
+      <div className="flex flex-col items-center mb-6">
+        <div className="flex items-center">
+          <div className="pr-3 text-purple-600">
+            <Logo></Logo>
+          </div>
+          <div className="text-purple-700 text-2xl font-semibold tracking-tight">
+            Alzheimer
+          </div>
         </div>
-        <div className="text-purple-600 text-shadow-xs">Alzheimer</div>
       </div>
       <div className="flex flex-col justify-center items-center">
-        <div className="bg-white rounded-xl min-w-48 p-8 border border-purple-600">
-          <Input reference={usernameRef} placeholder="Username"></Input>
-          <div className="text-gray-500 text-xs text-start italic px-3 ">
-            {" "}
-            Username: 5–100 characters long.
+        <div className="w-full max-w-md rounded-2xl bg-white/90 p-8 shadow-md border border-purple-100">
+          <h1 className="text-xl font-semibold text-gray-900 mb-4 text-center">
+            Sign in to your brain
+          </h1>
+          <div className="space-y-1.5 mb-4">
+            <Input reference={usernameRef} placeholder="Username"></Input>
+            <p className="text-gray-500 text-xs text-start italic px-1.5">
+              Username: 5–100 characters long.
+            </p>
           </div>
-          <Input reference={passwordRef} placeholder="Password"></Input>
-          <div className="text-gray-500 text-xs text-start italic px-3 ">
-            {" "}
-            Password: 8–16 chars with upper, <br></br>lower & special symbol.
+          <div className="space-y-1.5 mb-4">
+            <Input reference={passwordRef} placeholder="Password"></Input>
+            <p className="text-gray-500 text-xs text-start italic px-1.5">
+              Password: 8–16 chars with upper, lower &amp; special symbol.
+            </p>
           </div>
-          <div className="flex justify-center pt-4">
+          <div className="flex justify-center pt-2">
             <Button
               variant="primary"
               text="Signin"
@@ -70,12 +79,12 @@ export const Signin = () => {
             ></Button>
           </div>
           {errorMessage && (
-            <p className="text-red-500 text-sm mt-3 px-3 text-center">
+            <p className="text-red-500 text-sm mt-3 text-center">
               {errorMessage}
             </p>
           )}
         </div>
-        <span className="text-sm text-neutral-700 py-6">
+        <span className="text-sm text-neutral-700 py-6 text-center">
           Don’t have an account? Don’t worry,{" "}
           <span className="text-purple-600 font-semibold">
             <Link to="/signup">Signup</Link>

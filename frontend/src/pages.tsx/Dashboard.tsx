@@ -10,6 +10,7 @@ import axios from "axios";
 import { BACKEND_URL, SITE_URL } from "../config";
 export function Dashboard() {
   const [modelOpen, setModelOpen] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const { contents, refresh, deleteContent } = useContent();
   const [typeFilter, setTypeFilter] = useState<string | null>(null);
   const filteredContents = contents.filter((c) =>
@@ -77,18 +78,30 @@ export function Dashboard() {
     }
   }
   return (
-    <div>
-      <Sidebar setTypeFilter={setTypeFilter} />
+    <div className="min-h-screen bg-transparent">
+      <Sidebar
+        setTypeFilter={setTypeFilter}
+        mobileOpen={mobileSidebarOpen}
+        onMobileClose={() => setMobileSidebarOpen(false)}
+      />
 
-      <div className="p-4 ml-72 min-h-screen bg-gray-100 ">
+      <div className="min-h-screen bg-gray-50/80 ml-0 md:ml-72 p-4 sm:p-6">
         <AddContentModel
           open={modelOpen}
           onClose={() => {
             setModelOpen(false);
           }}
         ></AddContentModel>
-        <div className="flex justify-end gap-4 ">
-          {" "}
+        <div className="mb-4 flex items-center justify-between md:hidden">
+          <h1 className="text-lg font-semibold text-gray-900">Your brain</h1>
+          <button
+            onClick={() => setMobileSidebarOpen(true)}
+            className="inline-flex items-center rounded-full border border-purple-200 bg-white px-3 py-1 text-xs font-medium text-purple-700 shadow-sm hover:bg-purple-50"
+          >
+            Filters
+          </button>
+        </div>
+        <div className="flex flex-wrap justify-end gap-3">
           <SwitchButton
             onClick={() => {
               setModelOpen(true);
@@ -106,19 +119,21 @@ export function Dashboard() {
                 startIcon={<ShareIcon size="md" />}
                 loading={shareLoading}
               />
-              <div className="flex items-center gap-2 bg-white px-2 py-1 rounded shadow border border-purple-600 text-sm max-w-full overflow-x-auto">
-                <span>Share link:</span>
+              <div className="flex items-center gap-2 bg-white/90 px-3 py-1.5 rounded-full shadow-sm border border-purple-200 text-xs sm:text-sm max-w-full overflow-x-auto">
+                <span className="text-gray-600">Share link:</span>
                 <a
                   href={shareLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 underline truncate max-w-[200px]"
+                  className="text-purple-700 underline truncate max-w-[200px]"
                 >
                   {shareLink}
                 </a>
                 <SwitchButton
                   onClick={() => {
-                    navigator.clipboard.writeText(shareLink);
+                    if (shareLink) {
+                      navigator.clipboard.writeText(shareLink);
+                    }
                   }}
                   variant="primary"
                   text="Copy"
@@ -136,7 +151,7 @@ export function Dashboard() {
           )}
         </div>
 
-        <div className="flex flex-wrap gap-4 m-10">
+        <div className="mt-10 flex flex-wrap gap-5">
           {filteredContents.map(({ _id, type, link, title }) => (
             <Card
               type={

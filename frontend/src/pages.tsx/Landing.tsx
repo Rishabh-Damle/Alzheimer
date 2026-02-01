@@ -3,14 +3,14 @@ import { NavBar } from "../components/NavBar";
 
 export const Landing = () => {
   return (
-    <div className="absolute top-0 -z-10 h-full w-full bg-white">
-      <div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div>
-      <div>
-        <NavBar></NavBar>
-      </div>
-      <div>
+    <div className="relative min-h-screen w-full">
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[420px] bg-gradient-to-b from-purple-100/80 via-purple-50/30 to-transparent blur-[2px]" />
+      <main className="mx-auto flex min-h-screen max-w-6xl flex-col px-4 sm:px-6 pb-16">
+        <div className="pt-6">
+          <NavBar></NavBar>
+        </div>
         <Hero></Hero>
-      </div>
+      </main>
     </div>
   );
 };

@@ -37,56 +37,58 @@ export const AddContentModel = ({ open, onClose }: EventType) => {
   return (
     <div>
       {open && (
-        <div>
-          <div className="w-screen h-screen bg-slate-500 opacity-80 fixed top-0 left-0 flex  justify-center items-center"></div>
-          <div>
-            <div className="w-screen h-screen  opacity-100 fixed top-0 left-0 flex  justify-center items-center ">
-              <div className="flex flex-col justify-center ">
-                <span className="bg-neutral-100 opacity-100 p-4 rounded-xl border border-purple-600">
-                  <div className="flex justify-end" onClick={onClose}>
-                    <CrossIcon></CrossIcon>
-                  </div>
-                  <div className="p-2.5 flex flex-col justify-center items-center">
-                    <Input reference={titleRef} placeholder={"Title"}></Input>
-                    <Input reference={linkRef} placeholder={"Link"}></Input>
-                  </div>
-                  <div>
-                    <h1 className="text-center font-bold text-xl text-neutral-600">
-                      [Type]
-                    </h1>
-                    <div className="flex gap-3 p-4 justify-center pb-2">
-                      <Button
-                        text="Youtube"
-                        variant={
-                          type === ContentType.Youtube ? "primary" : "secondary"
-                        }
-                        size="sm"
-                        onClick={() => {
-                          setType(ContentType.Youtube);
-                        }}
-                      ></Button>
-                      <Button
-                        text="Twitter"
-                        variant={
-                          type === ContentType.Twitter ? "primary" : "secondary"
-                        }
-                        size="sm"
-                        onClick={() => {
-                          setType(ContentType.Twitter);
-                        }}
-                      ></Button>
-                    </div>
-                  </div>
-                  <div className="flex justify-center p-2.5">
-                    <Button
-                      variant="primary"
-                      text="Submit"
-                      size="md"
-                      onClick={addContent}
-                    ></Button>
-                  </div>
-                </span>
+        <div className="fixed inset-0 z-30 flex items-center justify-center">
+          <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" />
+          <div className="relative z-10 mx-4 w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-purple-100">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-semibold text-gray-900">
+                Add content
+              </h2>
+              <button
+                onClick={onClose}
+                className="text-gray-400 hover:text-gray-600 transition"
+              >
+                <CrossIcon></CrossIcon>
+              </button>
+            </div>
+            <div className="space-y-3">
+              <Input reference={titleRef} placeholder={"Title"}></Input>
+              <Input reference={linkRef} placeholder={"Link"}></Input>
+            </div>
+            <div className="mt-5">
+              <h3 className="text-sm font-medium text-neutral-700 mb-2">
+                Type
+              </h3>
+              <div className="flex gap-3">
+                <Button
+                  text="Youtube"
+                  variant={
+                    type === ContentType.Youtube ? "primary" : "secondary"
+                  }
+                  size="sm"
+                  onClick={() => {
+                    setType(ContentType.Youtube);
+                  }}
+                ></Button>
+                <Button
+                  text="Twitter"
+                  variant={
+                    type === ContentType.Twitter ? "primary" : "secondary"
+                  }
+                  size="sm"
+                  onClick={() => {
+                    setType(ContentType.Twitter);
+                  }}
+                ></Button>
               </div>
+            </div>
+            <div className="mt-6 flex justify-end">
+              <Button
+                variant="primary"
+                text="Submit"
+                size="md"
+                onClick={addContent}
+              ></Button>
             </div>
           </div>
         </div>

@@ -5,16 +5,17 @@ import { Signup } from "./pages.tsx/Signup";
 import { Signin } from "./pages.tsx/Signin";
 import { Landing } from "./pages.tsx/Landing";
 import { Share } from "./pages.tsx/Share";
+
 function App() {
   return (
-    <div>
+    <div className="min-h-screen bg-transparent text-gray-900">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Landing></Landing>}></Route>
-          <Route path="/signup" element={<Signup></Signup>}></Route>
-          <Route path="/signin" element={<Signin></Signin>}></Route>
-          <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
-          <Route path="/share/:shareId" element={<Share></Share>} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/share/:shareId" element={<Share />} />
         </Routes>
       </BrowserRouter>
     </div>

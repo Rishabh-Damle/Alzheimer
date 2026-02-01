@@ -4,23 +4,34 @@ import { Logo } from "./icons/Logo";
 
 export const NavBar = () => {
   return (
-    <div className="flex flex-wrap justify-between sm:justify-between p-10">
-      <div className="flex">
-        <div className="pr-2 text-4xl font-semibold text-purple-600 text-shadow-sm mt-2">
-          <Logo></Logo>
-        </div>
-        <div className=" text-purple-600 text-shadow-sm text-4xl font-semibold mt-1">
-          Alzheimer
+    <header className="w-full">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 py-3 sm:py-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-xl sm:rounded-2xl bg-white/80 shadow-sm backdrop-blur border border-purple-100 px-4 py-3 sm:px-6 sm:py-4">
+          <div className="flex items-center justify-center sm:justify-start gap-3">
+            <div className="text-3xl font-semibold text-purple-600">
+              <Logo></Logo>
+            </div>
+            <div className="text-purple-700 text-2xl font-semibold tracking-tight">
+              Alzheimer
+            </div>
+          </div>
+          <nav className="flex w-full flex-wrap items-center justify-center sm:w-auto sm:justify-end gap-2">
+            <Link
+              to="/signup"
+              className="inline-flex items-center justify-center rounded-full border border-purple-600 bg-purple-600 px-4 py-1.5 text-sm font-medium shadow-sm transition hover:bg-purple-700 hover:border-purple-700 mt-2 sm:mt-0"
+              style={{ color: "#fefce8" }}
+            >
+              Signup
+            </Link>
+            <Link
+              to="/signin"
+              className="inline-flex items-center justify-center rounded-full border border-purple-600 bg-white px-4 py-1.5 text-sm font-medium text-purple-700 shadow-sm transition hover:bg-purple-50 mt-2 sm:mt-0"
+            >
+              Signin
+            </Link>
+          </nav>
         </div>
       </div>
-      <div className="flex flex-wrap justify-between">
-        <div className="text-neutral-100 text-2xl border-2 border-purple-600 text-center rounded-lg mt-4 sm:mt-0 mr-4 py-1 px-2 bg-purple-600">
-          <Link to="/signup"> Signup</Link>
-        </div>
-        <div className=" text-purple-600 text-2xl text-center rounded-lg  border-2 border-purple-600 py-1 px-2 bg-neutral-100 mt-4 sm:mt-0">
-          <Link to="/signin"> Signin</Link>
-        </div>
-      </div>
-    </div>
+    </header>
   );
 };

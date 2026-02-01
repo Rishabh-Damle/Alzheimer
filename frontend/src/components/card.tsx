@@ -33,21 +33,23 @@ export function Card(props: CardProps) {
   }, [props.type, props.link]);
   return (
     <div ref={cardRef}>
-      <div className="bg-white rounded-md p-4 max-w-72 min-h-48 min-w-72 border-gray-200 border font-sans">
-        <div className="flex justify-between items-center ">
-          <div className="flex items-center text-md">
-            <div className="text-gray-500 pr-4">{getTypeIcon(props.type)}</div>
-            <div className="text-md font-bold">{props.title}</div>
+      <div className="bg-white/90 rounded-2xl p-4 sm:p-5 w-full max-w-xs min-h-48 border border-gray-100 shadow-sm hover:shadow-md transition-shadow font-sans">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center text-sm sm:text-base">
+            <div className="text-gray-400 pr-3">{getTypeIcon(props.type)}</div>
+            <div className="font-semibold text-gray-900 line-clamp-2">
+              {props.title}
+            </div>
           </div>
           <div className="flex items-center">
-            <div className="text-gray-500 pr-4 cursor-pointer flex items-center">
+            <div className="text-gray-400 pr-3 cursor-pointer flex items-center">
               <a href={props.link} target="_blank">
                 <ShareIcon size="md"></ShareIcon>
               </a>
             </div>
-            <div className="text-gray-500 cursor-pointer flex">
+            <div className="text-gray-400 cursor-pointer flex">
               <button
-                className="cursor-pointer "
+                className="cursor-pointer"
                 onClick={() => props.onDelete?.(props.id)}
               >
                 <DeleteIcon />
@@ -58,7 +60,7 @@ export function Card(props: CardProps) {
         <div className="pt-4">
           {props.type === "Youtube" && (
             <iframe
-              className="w-full rounded"
+              className="w-full aspect-video rounded-xl border border-gray-100"
               src={props.link.replace("watch", "embed").replace("?v=", "/")}
               title="YouTube video player"
               frameBorder="0"

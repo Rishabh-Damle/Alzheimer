@@ -6,15 +6,20 @@ import { DB_URL } from "./config";
 
 if (DB_URL) {
   mongoose
-    .connect(DB_URL)
+    .connect(DB_URL, {
+      bufferCommands: false,
+    })
     .then(() => {
-      // connected
+      console.log("Connected to MongoDB successfully");
     })
     .catch((err) => {
-      console.error("Mongo connection error:", err);
+      console.error(
+        "CRITICAL: Mongo connection error. Check your DB_URL and IP whitelist.",
+      );
+      console.error("Error details:", err.message);
     });
 } else {
-  console.error("DB_URL is not set; skipping Mongo connection");
+  console.error("DB_URL is not set in .env file.");
 }
 import { model, Schema } from "mongoose";
 // Remove accidental zod imports; use Mongoose types instead
@@ -43,9 +48,9 @@ const LinkSchema = new Schema({
 });
 export const LinkModel = model("Link", LinkSchema);
 //content schema
-const contentTypes = ["Youtube", "Twitter"];
+const contentTypes = ["Youtube", "Twitter", "Test"];
 const ContentSchema = new Schema({
-  link: { type: String, ref: "Link", required: true },
+  link: { type: String, required: true },
   type: { type: String, required: true, enum: contentTypes },
   title: { type: String, required: true },
   tags: [{ type: mongoose.Types.ObjectId, ref: "Tag" }],
