@@ -10,10 +10,10 @@ contentRouter.use(express.json());
 contentRouter.post("/createYourContent", userAuth, async (req, res) => {
   try {
     const userId = req.userId;
-    const { link, type, title } = req.body;
+    const { link, type, title, contentId } = req.body;
 
     //checking whether user given all the fields or not
-    if (!link || !type || !title) {
+    if (!link || !type || !title || !contentId) {
       res.status(400).json({ message: "All fields are required" });
       return;
     }
@@ -58,8 +58,8 @@ contentRouter.get("/getYourContent", userAuth, async (req, res) => {
   console.log(content);
 });
 contentRouter.delete("/deleteYourContent", userAuth, async (req, res) => {
-  const contentId = req.body.contentId;
-
+  const { contentId } = req.params;
+  console.log(contentId);
   await ContentModel.deleteMany({
     _id: contentId,
     //@ts-ignore
