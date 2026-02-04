@@ -70,7 +70,7 @@ contentRouter.delete("/deleteYourContent", userAuth, async (req, res) => {
     message: "Content deleted",
   });
 });
-contentRouter.get("/share", userAuth, async (req, res) => {
+contentRouter.get("/getShareLink", userAuth, async (req, res) => {
   const existingLink = await LinkModel.findOne({ userId: req.userId });
   if (!existingLink) {
     res.status(200).json({ hash: null });
@@ -97,6 +97,7 @@ contentRouter.post("/shareYourContent", userAuth, async (req, res) => {
 });
 contentRouter.get("/share/:shareLink", async (req, res) => {
   const hash = req.params.shareLink;
+  console.log(hash);
   const link = await LinkModel.findOne({
     hash: hash,
   });
