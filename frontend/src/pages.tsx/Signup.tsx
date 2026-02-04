@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { Input } from "../components/Input";
 import { Button } from "../components/ui/Button";
 import { Link, useNavigate } from "react-router-dom";
-import { Logo } from "../components/icons/Logo";
+import { Brain } from "lucide-react";
 
 export const Signup = () => {
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -16,7 +16,7 @@ export const Signup = () => {
     const username = usernameRef.current?.value;
     const password = passwordRef.current?.value;
     try {
-      await axios.post(`${BACKEND_URL}/api/v1/signup`, {
+      await axios.post(`${BACKEND_URL}/api/v1/user/signup`, {
         username,
         password,
       });
@@ -26,10 +26,10 @@ export const Signup = () => {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 409) {
           setErrorMessage("User already exists. Please sign in.");
-        } else if (error.response?.data?.Message) {
-          setErrorMessage(error.response.data.Message);
         } else if (error.response?.data?.message) {
           setErrorMessage(error.response.data.message);
+        } else if (error.response?.data?.Message) {
+          setErrorMessage(error.response.data.Message);
         } else {
           setErrorMessage("Signup failed. Please try again.");
         }
@@ -39,38 +39,43 @@ export const Signup = () => {
     }
   }
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center bg-transparent px-4">
-      <div className="flex flex-col items-center mb-6">
-        <div className="flex items-center">
-          <div className="pr-3 text-purple-600">
-            <Logo></Logo>
-          </div>
-          <div className="text-purple-700 text-2xl font-semibold tracking-tight">
-            Alzheimer
-          </div>
+    <div className="min-h-screen w-full flex flex-col justify-center bg-gradient-to-br from-slate-50 to-slate-100 px-4">
+      <div className="flex flex-col items-center mb-8">
+        <div className="flex items-center gap-2">
+          <Brain className="w-8 h-8 text-blue-600" />
+          <span className="text-2xl font-bold text-slate-900">Alzheimer</span>
         </div>
       </div>
       <div className="flex flex-col justify-center items-center">
-        <div className="w-full max-w-md rounded-2xl bg-white/90 p-8 shadow-md border border-purple-100">
-          <h1 className="text-xl font-semibold text-gray-900 mb-4 text-center">
+        <div className="w-full max-w-md rounded-2xl bg-white/80 backdrop-blur-md p-8 shadow-xl border border-slate-200">
+          <h1 className="text-2xl font-bold text-slate-900 mb-2 text-center">
             Create your account
           </h1>
-          <div className="space-y-1.5 mb-4">
-            <Input reference={usernameRef} placeholder="Username"></Input>
-            <p className="text-gray-500 text-xs text-start italic px-1.5">
-              Username: 5–100 characters long.
-            </p>
+          <p className="text-slate-600 text-center mb-8">
+            Start building your second brain today
+          </p>
+          <div className="space-y-4 mb-6">
+            <div>
+              <Input reference={usernameRef} placeholder="Username"></Input>
+              <p className="text-slate-400 text-[10px] mt-1 italic px-1">
+                Username: 5–100 characters long.
+              </p>
+            </div>
+            <div>
+              <Input
+                reference={passwordRef}
+                placeholder="Password"
+                type="password"
+              ></Input>
+              <p className="text-slate-400 text-[10px] mt-1 italic px-1">
+                Password: 8–16 chars with upper, lower &amp; special symbol.
+              </p>
+            </div>
           </div>
-          <div className="space-y-1.5 mb-4">
-            <Input reference={passwordRef} placeholder="Password" type="password"></Input>
-            <p className="text-gray-500 text-xs text-start italic px-1.5">
-              Password: 8–16 chars with upper, lower &amp; special symbol.
-            </p>
-          </div>
-          <div className="flex justify-center pt-2">
+          <div className="flex justify-center">
             <Button
               variant="primary"
-              text="Signup"
+              text="Sign Up"
               size="md"
               fullWidth={true}
               loading={false}
@@ -78,17 +83,20 @@ export const Signup = () => {
             ></Button>
           </div>
           {errorMessage && (
-            <p className="text-red-500 text-sm mt-3 text-center">
+            <p className="text-red-500 text-sm mt-4 text-center">
               {errorMessage}
             </p>
           )}
         </div>
-        <span className="text-sm text-neutral-700 py-6 text-center">
+        <div className="mt-8 text-center text-sm text-slate-600">
           Already have an account?{" "}
-          <span className="text-purple-600 font-semibold">
-            <Link to="/signin">Signin</Link>
-          </span>
-        </span>
+          <Link
+            to="/signin"
+            className="text-blue-600 font-semibold hover:text-blue-700 transition-colors"
+          >
+            Sign In
+          </Link>
+        </div>
       </div>
     </div>
   );

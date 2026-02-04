@@ -4,34 +4,39 @@ import mongoose, { Types } from "mongoose";
 
 import { DB_URL } from "./config";
 
-if (DB_URL) {
-  mongoose
-    .connect(DB_URL, {
-      bufferCommands: false,
-    })
-    .then(() => {
-      console.log("Connected to MongoDB successfully");
-    })
-    .catch((err) => {
-      console.error(
-        "CRITICAL: Mongo connection error. Check your DB_URL and IP whitelist.",
-      );
-      console.error("Error details:", err.message);
-    });
-} else {
-  console.error("DB_URL is not set in .env file.");
-}
-import { model, Schema } from "mongoose";
-// Remove accidental zod imports; use Mongoose types instead
+const connectWithRetry = () => {
+  if (DB_URL) {
+    mongoose
+      .connect(DB_URL, {
+        bufferCommands: false,
+      })
+      .then(() => {
+        console.log("Connected to MongoDB successfully");
+      })
+      .catch((err) => {
+        console.error(
+          "CRITICAL: Mongo connection error. Check your DB_URL and IP whitelist."
+        );
+        console.error("Error details:", err.message);
+        console.log("Retrying in 5 seconds...");
+        setTimeout(connectWithRetry, 5000);
+      });
+  } else {
+    console.error("DB_URL is not set in .env file.");
+  }
+};
 
-//user schema
+connectWithRetry();
+
+import { model, Schema } from "mongoose";
+
 const UserSchmea = new Schema({
   username: { type: String, unique: true },
   password: String,
 });
 
 export const UserModel = model("User", UserSchmea);
-//TagSchema
+
 const TagSchema = new Schema({
   title: { type: String, required: true, unique: true },
 });
@@ -47,8 +52,15 @@ const LinkSchema = new Schema({
   },
 });
 export const LinkModel = model("Link", LinkSchema);
-//content schema
-const contentTypes = ["Youtube", "Twitter", "Test"];
+
+const contentTypes = [
+  "Youtube",
+  "Twitter",
+  "Document",
+  "Github",
+  "Instagram",
+  "Test",
+];
 const ContentSchema = new Schema({
   link: { type: String, required: true },
   type: { type: String, required: true, enum: contentTypes },

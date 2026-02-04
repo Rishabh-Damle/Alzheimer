@@ -13,8 +13,8 @@ userRouter.post("/signup", async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    res.status(404).json({
-      Error: `please add all the credentials that all are neccsesarry`,
+    res.status(400).json({
+      message: `Please provide both username and password`,
     });
     return;
   }
@@ -32,8 +32,8 @@ userRouter.post("/signup", async (req, res) => {
   const parsedDataWithSuccess = requiredBody.safeParse(req.body);
   if (!parsedDataWithSuccess.success) {
     res.status(400).json({
-      Message: `Invalid format. Please checking your input.`,
-      Error: parsedDataWithSuccess.error,
+      message: `Invalid format. Please check your input.`,
+      error: parsedDataWithSuccess.error,
     });
     return;
   }
@@ -65,7 +65,7 @@ userRouter.post("/signin", async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
     res.status(400).json({
-      Error: `Please provide all necessary credentials`,
+      message: `Please provide all necessary credentials`,
     });
     return;
   }
@@ -76,12 +76,12 @@ userRouter.post("/signin", async (req, res) => {
   if (!existingUser || !existingUser.password) {
     return res
       .status(401)
-      .json({ Error: "User not found or password missing" });
+      .json({ message: "User not found or password missing" });
   }
   const passwordmatch = await bcrypt.compare(password, existingUser.password);
 
   if (!passwordmatch) {
-    res.status(401).json({ Error: `Invalid password` });
+    res.status(401).json({ message: `Invalid password` });
     return;
   }
 

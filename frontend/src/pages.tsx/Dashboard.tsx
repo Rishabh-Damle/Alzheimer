@@ -1,6 +1,5 @@
 import { SwitchButton } from "../components/SwitchButton";
-import { PlusIcon } from "../components/icons/PlusIcon";
-import { ShareIcon } from "../components/icons/ShareIcon";
+import { Plus, Share2, Filter } from "lucide-react";
 import { Card } from "../components/card";
 import { AddContentModel } from "../components/AddContentModel";
 import { useEffect, useState } from "react";
@@ -26,7 +25,7 @@ export function Dashboard() {
   useEffect(() => {
     async function fetchShareStatus() {
       try {
-        const response = await axios.get(`${BACKEND_URL}/api/v1/share`, {
+        const response = await axios.get(`${BACKEND_URL}/api/v1/content/getShareLink`, {
           headers: { Authorization: localStorage.getItem("Token") || "" },
         });
         const hash = (response as any)?.data?.hash;
@@ -42,7 +41,7 @@ export function Dashboard() {
     setShareLoading(true);
     try {
       const response = await axios.post(
-        `${BACKEND_URL}/api/v1/share`,
+        `${BACKEND_URL}/api/v1/content/shareYourContent`,
         {
           share: true,
         },
@@ -52,8 +51,7 @@ export function Dashboard() {
         (response as any)?.data?.hash || (response as any)?.data?.link;
       if (hash) setShareLink(`${SITE_URL}/share/${hash}`);
       else {
-        // Fallback: re-fetch current status if response shape unexpected
-        const check = await axios.get(`${BACKEND_URL}/api/v1/share`, {
+        const check = await axios.get(`${BACKEND_URL}/api/v1/content/getShareLink`, {
           headers: { Authorization: localStorage.getItem("Token") || "" },
         });
         const currentHash = (check as any)?.data?.hash;
@@ -68,7 +66,7 @@ export function Dashboard() {
     setShareLoading(true);
     try {
       await axios.post(
-        `${BACKEND_URL}/api/v1/share`,
+        `${BACKEND_URL}/api/v1/content/shareYourContent`,
         { share: false },
         { headers: { Authorization: localStorage.getItem("Token") || "" } }
       );
@@ -92,23 +90,26 @@ export function Dashboard() {
             setModelOpen(false);
           }}
         ></AddContentModel>
-        <div className="mb-4 flex items-center justify-between md:hidden">
-          <h1 className="text-lg font-semibold text-gray-900">Your brain</h1>
+        <div className="mb-8 flex items-center justify-between md:hidden">
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-bold text-slate-900">Your Brain</h1>
+          </div>
           <button
             onClick={() => setMobileSidebarOpen(true)}
-            className="inline-flex items-center rounded-full border border-purple-200 bg-white px-3 py-1 text-xs font-medium text-purple-700 shadow-sm hover:bg-purple-50"
+            className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-4 py-2 text-sm font-medium text-blue-700 shadow-sm hover:bg-blue-50 transition-colors"
           >
-            Filters
+            <Filter className="w-4 h-4" />
+            <span>Filters</span>
           </button>
         </div>
-        <div className="flex flex-wrap justify-end gap-3">
+        <div className="flex flex-wrap justify-end gap-3 mb-8">
           <SwitchButton
             onClick={() => {
               setModelOpen(true);
             }}
             variant="primary"
             text="Add Content"
-            startIcon={<PlusIcon size="md"></PlusIcon>}
+            startIcon={<Plus className="w-4 h-4" />}
           ></SwitchButton>
           {shareLink ? (
             <>
@@ -116,16 +117,16 @@ export function Dashboard() {
                 onClick={handleShareOff}
                 variant="secondary"
                 text="Stop sharing"
-                startIcon={<ShareIcon size="md" />}
+                startIcon={<Share2 className="w-4 h-4" />}
                 loading={shareLoading}
               />
-              <div className="flex items-center gap-2 bg-white/90 px-3 py-1.5 rounded-full shadow-sm border border-purple-200 text-xs sm:text-sm max-w-full overflow-x-auto">
-                <span className="text-gray-600">Share link:</span>
+              <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-blue-200 text-xs sm:text-sm max-w-full overflow-x-auto">
+                <span className="text-slate-500 font-medium">Link:</span>
                 <a
                   href={shareLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-purple-700 underline truncate max-w-[200px]"
+                  className="text-blue-700 underline truncate max-w-[200px] hover:text-blue-800 transition-colors"
                 >
                   {shareLink}
                 </a>
@@ -145,7 +146,7 @@ export function Dashboard() {
               onClick={handleShareOn}
               variant="secondary"
               text="Share brain"
-              startIcon={<ShareIcon size="md" />}
+              startIcon={<Share2 className="w-4 h-4" />}
               loading={shareLoading}
             />
           )}
@@ -170,6 +171,11 @@ export function Dashboard() {
             />
           ))}
         </div>
+        {filteredContents.length === 0 && (
+          <div className="text-center py-20 bg-slate-50/50 rounded-3xl border-2 border-dashed border-slate-200 mt-10">
+            <p className="text-slate-500">No content found matching your filters.</p>
+          </div>
+        )}
       </div>
     </div>
   );

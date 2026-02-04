@@ -13,9 +13,9 @@ interface ButtonProps {
 }
 const buttonVariants = {
   primary:
-    "bg-purple-600 text-white hover:bg-purple-700 focus-visible:ring-purple-500",
+    "bg-blue-600 text-white hover:bg-blue-700 focus-visible:ring-blue-500",
   secondary:
-    "bg-purple-50 text-purple-700 border border-purple-200 hover:bg-purple-100 focus-visible:ring-purple-300",
+    "bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 focus-visible:ring-slate-300",
 };
 const defaultStyles =
   "inline-flex items-center justify-center rounded-lg cursor-pointer shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-default disabled:opacity-60 transition";

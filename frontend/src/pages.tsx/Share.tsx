@@ -16,7 +16,7 @@ export function Share() {
       setError("");
       try {
         const response = await axios.get(
-          `${BACKEND_URL}/api/v1/share/${shareId}`
+          `${BACKEND_URL}/api/v1/content/share/${shareId}`
         );
         setContents((response as any).data.content || []);
         setUsername((response as any).data.username || "");
@@ -52,10 +52,7 @@ export function Share() {
             A snapshot of saved links shared with you.
           </p>
         </div>
-        <div className="flex gap-5 flex-wrap">
-          {contents.length === 0 && (
-            <div className="text-sm text-gray-500">No content found.</div>
-          )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {contents.map(({ _id, title, type, link }, idx) => (
             <Card
               key={_id || idx}
@@ -66,6 +63,11 @@ export function Share() {
             />
           ))}
         </div>
+        {contents.length === 0 && (
+          <div className="text-center py-20 text-sm text-gray-500">
+            No content found.
+          </div>
+        )}
       </div>
     </div>
   );

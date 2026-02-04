@@ -1,4 +1,3 @@
-//override the types of the express request object avoid the use of @ts-ignore
 import dotenv from "dotenv";
 dotenv.config();
 import jwt from "jsonwebtoken";

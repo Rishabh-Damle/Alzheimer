@@ -1,5 +1,4 @@
-//controlled component
-import { CrossIcon } from "./icons/CrossIcon";
+import { X } from "lucide-react";
 import { Button } from "./ui/Button";
 import { Input } from "./Input";
 import { useRef, useState } from "react";
@@ -19,7 +18,7 @@ export const AddContentModel = ({ open, onClose }: EventType) => {
     const title = titleRef.current?.value;
     const link = linkRef.current?.value;
     const response = await axios.post(
-      `${BACKEND_URL}/api/v1/createYourContent`,
+      `${BACKEND_URL}/api/v1/content/createYourContent`,
       { link, title, type },
       {
         headers: {
@@ -39,25 +38,25 @@ export const AddContentModel = ({ open, onClose }: EventType) => {
       {open && (
         <div className="fixed inset-0 z-30 flex items-center justify-center">
           <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" />
-          <div className="relative z-10 mx-4 w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-purple-100">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">
-                Add content
+          <div className="relative z-10 mx-4 w-full max-w-md rounded-2xl bg-white p-8 shadow-2xl border border-slate-200">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-bold text-slate-900">
+                Add New Content
               </h2>
               <button
                 onClick={onClose}
-                className="text-gray-400 hover:text-gray-600 transition"
+                className="p-1 text-slate-400 hover:text-slate-600 transition-colors rounded-lg hover:bg-slate-50"
               >
-                <CrossIcon></CrossIcon>
+                <X className="w-5 h-5" />
               </button>
             </div>
             <div className="space-y-3">
               <Input reference={titleRef} placeholder={"Title"}></Input>
               <Input reference={linkRef} placeholder={"Link"}></Input>
             </div>
-            <div className="mt-5">
-              <h3 className="text-sm font-medium text-neutral-700 mb-2">
-                Type
+            <div className="mt-6">
+              <h3 className="text-sm font-semibold text-slate-700 mb-3">
+                Select Type
               </h3>
               <div className="flex gap-3">
                 <Button

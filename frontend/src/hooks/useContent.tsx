@@ -14,7 +14,7 @@ export const useContent = () => {
 
   const refresh = async () => {
     try {
-      const response = await axios.get(`${BACKEND_URL}/api/v1/getYourContent`, {
+      const response = await axios.get(`${BACKEND_URL}/api/v1/content/getYourContent`, {
         headers: { Authorization: localStorage.getItem("Token") || "" },
       });
       setContents(response.data.content);
@@ -25,7 +25,7 @@ export const useContent = () => {
 
   const deleteContent = async (id: string) => {
     try {
-      await axios.delete(`${BACKEND_URL}/api/v1/deleteYourContent`, {
+      await axios.delete(`${BACKEND_URL}/api/v1/content/deleteYourContent`, {
         headers: { Authorization: localStorage.getItem("Token") || "" },
         data: { contentId: id },
       });
